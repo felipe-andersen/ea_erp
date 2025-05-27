@@ -1,0 +1,84 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserStatus {
+  active
+  inactive
+  suspended
+}
+
+// contry
+model Customer {
+  id        String   @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  publicId  String?  @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id")
+  name      String
+  email     String?  @unique
+  cpf       String?  @unique
+  cnpj      String?  @unique
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+}
+
+enum UserType {
+  admin
+  client
+  employee
+  manager
+}
+
+// idiom | contry
+model Service {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  defaultPrice Float
+  type         String?
+  category     Category @relation(fields: [categoryName], references: [categoryName])
+  categoryName String
+}
+
+model Category {
+  id           String    @id @default(uuid())
+  categoryName String    @unique
+  Service      Service[]
+}
+
+model User {
+  user_id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_created_at           DateTime @default(now()) @db.Timestamptz(6)
+  user_public_id            String?  @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_name                 String   @unique
+  user_default_email        String   @unique
+  user_alternative_email    String?  @unique
+  user_default_celphone     String   @unique
+  user_alternative_celphone Float?   @db.Real
+  user_password_hash        String?
+  user_status               String   @db.VarChar
+}
+
+// model User {
+//   id                   String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   createdAt            DateTime   @default(now()) @db.Timestamptz(6)
+//   updatedAt            DateTime   @updatedAt
+
+//   userName             String     @unique
+//   defaultEmail         String     @unique
+//   alternativeEmail     String?    @unique
+//   defaultCellphone     String     @unique
+//   alternativeCellphone String?    @unique
+
+//   // Senha segura (obrigatória para evitar problemas de autenticação)
+//   passwordHash         String     @db.Text
+//   passwordSalt         String     @db.Text
+
+//   status               UserStatus @default(active) 
+//   userType             UserType   @default(client) 
+// }
