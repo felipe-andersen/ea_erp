@@ -22,7 +22,7 @@ const list = [
     link: "/dashboard/PDV"
    },
    {
-    title: 'Pátio',
+    title: 'Operacional',
     Icon: (<Barcode strokeWidth={1} size={18}/>),
     link: "/dashboard/coutyard"
    },
@@ -45,44 +45,38 @@ const list = [
     title: 'Produtos e serviços',
     Icon: (<Barcode strokeWidth={1} size={18}/>),
     link: "/dashboard/services"
-   }
-   ,
+   },
    {
     title: 'Clientes',
     Icon: (<Contact strokeWidth={1} size={18}/>),
     link: "/dashboard/customers"
-   }
-   ,
+   },
+   {
+    title: 'Fornecedores',
+    Icon: (<Contact strokeWidth={1} size={18}/>),
+    link: "/dashboard/customers"
+   },
    {
     title: 'Calendário',
     Icon: (<CalendarCheck strokeWidth={1} size={18}/>),
     link: "/dashboard/calendar"
-   }
-   ,
+   },
    {
     title: 'Parcerias',
     Icon: (<Handshake strokeWidth={1} size={18}/>),
-    link: "/dashboard/PDV"
-   }
-   ,
+    link: "/dashboard/partnership"
+   },
    {
     title: 'Relatórios',
     Icon: (<BarChart3 strokeWidth={1} size={18}/>),
-    link: "/dashboard/PDV"
+    link: "/dashboard/report"
    }
    ,
    {
     title: 'Configuração',
     Icon: ( <Settings strokeWidth={1} size={18}/>),
     link: "/dashboard/settings"
-   }
-   ,
-   {
-    title: 'Suporte',
-    Icon: ( <LandPlot strokeWidth={1} size={18}/>),
-    link: "/dashboard/suport"
-   }
-   ,
+   },
    {
     title: 'Crédito para crescer',
     Icon: (<LandPlot strokeWidth={1} size={18}/>),
@@ -90,6 +84,36 @@ const list = [
    },
    {
     title: 'Conta',
+    Icon: (<LandPlot strokeWidth={1} size={18}/>),
+    link: "/dashboard/account"
+   },
+   {
+    title: 'Store Front',
+    Icon: (<LandPlot strokeWidth={1} size={18}/>),
+    link: "/dashboard/grow-up"
+   },
+   {
+    title: 'Chamadas de suporte',
+    Icon: (<LandPlot strokeWidth={1} size={18}/>),
+    link: "/dashboard/suport-ticket"
+   },
+   {
+    title: 'Certificado Digital',
+    Icon: (<LandPlot strokeWidth={1} size={18}/>),
+    link: "/dashboard/account"
+   },
+   {
+    title: 'Certificado Digital',
+    Icon: (<LandPlot strokeWidth={1} size={18}/>),
+    link: "/dashboard/account"
+   },
+   {
+    title: 'Certificado Digital',
+    Icon: (<LandPlot strokeWidth={1} size={18}/>),
+    link: "/dashboard/account"
+   },
+   {
+    title: 'Certificado Digital',
     Icon: (<LandPlot strokeWidth={1} size={18}/>),
     link: "/dashboard/account"
    }
@@ -102,14 +126,14 @@ const side: ISideBar = {
 const SideBar = memo(({isVisibleTitle}:{isVisibleTitle: boolean}) => {
 
     return (
-        <section  className={` max-w-64 w-min  flex flex-col mt-0 bg-white h-full`}>
+        <section  className={` max-w-[280px] min-w-[280px]  flex flex-col mt-0 bg-white h-full border-r`}>
             <div  className=" h-full  flex flex-col  overflow-x-hidden ">
                 <div className=" flex flex-col justify-start bg-red-0 text-sm whitespace-nowrap  h-[calc(100%-40px)] overflow-scroll  scroll-v py-2 ">
-                    <div className="h-full w-full p-[2px]">
+                    <div className="h-full w-full p-[2px] pl-5">
                     {
                         list.map((i, key) => {
                             return (
-                                <Link href={`${i.link}`} target="_blank" key={key} className="w-full  h-10 text-zinc-700 flex flex-row  hover:bg-zinc-200  rounded  gap-2 items-center">
+                                <Link href={`${i.link}`}  key={key} className="w-min  h-10 text-zinc-700 flex flex-row  hover:bg-zinc-200  rounded  gap-2 items-center">
                                     <div about='icone' className="w-10 h-10  h-full flex items-center justify-center">
                                         {/* <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> */}
                                         {i.Icon}

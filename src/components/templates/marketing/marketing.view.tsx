@@ -1,10 +1,10 @@
 'use client'
 import { Header } from "@/components/organisms/header";
-import { Main } from "./main.view";
 import SideBar from "@/components/organisms/side-bar/side-bar.view";
+import Content from "./marketing-content.view";
 
 
-export function ServicesList() {
+export function Marketing() {
     return (
         
         <div 
@@ -14,10 +14,11 @@ export function ServicesList() {
             <Header pageName="ORM"/>
               <div className="flex h-[calc(100%-56px)] fixed bg-neutral-100 w-full mt-14">
                 <SideBar isVisibleTitle/>
-                <Main/>
+                <Content />
             </div>
             
         </div>
     )
 }
 
+export default Marketing

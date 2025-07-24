@@ -24,7 +24,7 @@ async function addFriend(props:Props) {
 
 export function PDV() {
     return (
-        <div className="bg-[#f6f8fa]">
+        <div className="">
             <Header pageName="PDV"/>
             <Main/>
         </div>

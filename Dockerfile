@@ -1,5 +1,5 @@
 FROM node:current-alpine
-RUN apk update && apk add --no-cache openssl=3.3.3-r0
+RUN apk update && apk add --no-cache openssl
 WORKDIR /usr/share/app
 COPY package.json ./ 
 RUN npm install && npm install --dev

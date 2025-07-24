@@ -1,6 +1,5 @@
 
 'use client';
-import { XIcon } from 'lucide-react';
 import { useState } from 'react';
 
 
@@ -173,20 +172,6 @@ export default function ItemPage() {
                             <div className="border h-10 w-full rounded-sm">
                                 <input className="w-full h-full"/>
                             </div>
-                        </div>
-                    </div>
-                      <h2 className='mb-3 font-bold text-xl'>Tags</h2>
-                    <div className=" rounded-3xl text-sm flex flex-col gap-3">
-                         <div className={`flex flex-col`}>
-                            <div className="border h-10 w-full rounded-sm">
-                                <input className="w-full h-full"/>
-                            </div>
-                        </div>
-                        <div className='p-3 rounded-full bg-neutral-100 w-min px-4 font-medium'>Praias
-
-                            <button onClick={() => {}}>
-                                <XIcon/>
-                            </button>
                         </div>
                     </div>
                 </div>

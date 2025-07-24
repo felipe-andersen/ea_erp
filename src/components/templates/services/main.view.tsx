@@ -1,9 +1,11 @@
 
 'use client'
-import { X, Bell, MessageSquareIcon, MoveRight, EllipsisVertical, Key, Table, List, Filter, Sidebar} from "lucide-react";
+import { X, Bell, MessageSquareIcon, MoveRight, EllipsisVertical, Key, Table, List, Filter, Sidebar, FilterIcon} from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { capitalizeWords } from '@/shared/capitalizeWords';
 import React, { useState, Dispatch, SetStateAction } from "react";
+import { createPortal } from "react-dom";
+import { Modal as GlobalModal} from "@/components/organisms/modal/modal.view";
 
 interface Category {
     category: string
@@ -143,7 +145,26 @@ export async function Modal() {
     )
 }
 
-export async function Main() {
+type Experience = {
+    id: string
+    notes?: string
+    // daysAndTimes?: DayAndTime[]    // JSON
+    prices: {
+        id: string
+        ageRange: string // Child (1-11 years) | General (1-65+ years)
+        minPrice: number,
+        maxPrice: number,
+        defaultPrice?: number
+    }[] // JSON
+    availableTickets: number
+    soldTickets: number
+    remainingTickets: number
+    minPerUser: number
+    maxPerUser: number
+    disabled: boolean
+}
+
+export function Main() {
     // states
     const [hour, setHour] = useState("1 hour")
     const [time, setTime] = useState("1 time")
@@ -166,26 +187,29 @@ export async function Main() {
     // if (error) return 'An error has occurred: ' + error.message
 
     // my mutations
+
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+
    
     return (
-    <main className='  bg-[#f6f8fa]   h-full mt-16 overflow-scroll '>
+    <main className='  bg-neutral-100 h-full overflow-y-scroll w-full'>
         <CategoryModal
             onClose={setIsModalOpen}
             isOpen={isModalOpen}
         />
-        <div className='w-full h-min   sm:p-6 flex flex-col '>
+        <div className='w-full h-min   sm:p-8 flex flex-col '>
             <div className='flex justify-between '>
                 <div className='flex flex-col mb-10 gap-3'>
-                    <h2 className='text-md font-semibold '>
-                        Serviços 
+                    <h2 className='text-md font-bold text-xl'>
+                        Serviços
                     </h2>
-                    <p className='text-zinc-400 text-sm'>
+                    <p className='text-neutral-600 text-sm'>
                         1 categoria 3 serviços cadastrados
                     </p>
                 </div>
                 <button 
                     onClick={() => setIsModalOpen(true)}
-                    className=' h-10 w-min px-3 whitespace-nowrap text-[13px]  rounded-xl  text-neutral-800 bg-[#f1f1f1] hover:bg-[#e7e7e7]'>
+                    className=' h-10 w-min px-3 whitespace-nowrap text-sm font-medium  rounded-xl  text-white 0 bg-neutral-900 hover:bg-[#363636]'>
                     Nova categoria
                 </button>
              {/* <Modal/> */}
@@ -232,20 +256,20 @@ export async function Main() {
                     Lavagem
                 </h2>
             </div> */}
-            <div className='bg-white py-8 rounded-xl border-dashed  mb-6 border overflow-x-scroll'>
+            <div className='bg-white py-8 rounded-xl border-[1px] border-b-[4px] border-l-[1px] mb-6 border'>
                 <div className='flex justify-between px-4 sm:px-8 items-center mb-6'>
-                    <h2 className='font-medium text-md '>
-                        Lavagem
+                    <h2 className='font-semibold text-lg '>
+                        Experiências
                     </h2>
                     <div className='flex gap-3'>
                         <button
-                            onClick={() => {}} 
-                            className='h-10 w-min px-3 whitespace-nowrap  text-white text-[13px] rounded-xl bg-[#4fc9da] '>
+                            onClick={() => router.push('services/new')} 
+                            className='h-10 w-min px-3 whitespace-nowrap  text- text-sm rounded-xl bg-blue-100 font-medium '>
                             Cadastrar serviço 
                         </button>
                         <div className='flex -mr-2'>
                             <div className='h-9 w-9 rounded  hover:bg-zinc-100 flex items-center justify-center '>
-                                <Filter 
+                                <FilterIcon 
                                     strokeWidth={1} 
                                     size={16} 
                                 />
@@ -273,359 +297,105 @@ export async function Main() {
                         </div>
                     </div>
                 </div>
-                <div className='px-7'>
-                    <table className='bg-white w-full '>
-                        <thead className=''>
-                            <tr className='h-10'>
-                                <th className='text-start text-xs bg-blue-0 w-16 font-normal text-zinc-700'></th>
-                                <th className='text-start text-xs font-normal text-zinc-400'>
-                                    Nome
-                                </th>
-                                <th className='text-start text-xs font-normal text-zinc-400'>
-                                    Tipo
-                                </th>
-                                <th className='text-start text-xs font-normal text-zinc-400'>
-                                    Descrição
-                                </th>
-                                <th className='text-start text-xs font-normal text-zinc-400'>
-                                    ID
-                                </th>
-                                <th className='text-start text-xs font-normal text-zinc-400'>
-                                    Valor (R$)
-                                </th>
-                                <th className='text-start text-xs font-normal text-zinc-400'>
+                <div className="flex jsutify-between w-full">
+                    <div className='px-7 w-full overflow-x-scroll'>
+                        <table className='bg-white w-full '>
+                            <thead className=''>
+                                <tr className='h-10'>
+                                    <th className='text-start text-sm  w-16 font-normal text-zinc-700  max-w-34 w-[40px] min-w-[40px]'>
 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className=''>
-                            {
-                                services.map(item => (
-                                    <>
-                                        <tr 
-                                            className='h-12 border-b  border-blue-0  hover:border-blue-500 text-sm text-[#53626b]  group/item whitespace-nowrap  '
-                                        >
-                                            <td className='bg-blue-0 text-center '>
-                                                <div className='flex items-center '>
-                                                    <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500'>
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px] '>
+                                        Id
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600  w-[140px] min-w-[140px]'>
+                                        Nome
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Mínimo por usuário
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Máximo por usuário
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Status {/*disabled*/}
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Vendidos
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Restantes
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Datas e horarios
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Preços 
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Preços 
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Preços 
+                                    </th>
+                                    <th className='text-start text-sm font-normal text-zinc-600 w-[140px] min-w-[140px]'>
+                                        Preços 
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className=''>
+                                {
+                                    services.map(item => (
+                                        <>
+                                            <tr 
+                                                className='h-12 border-b  border-blue-0  hover:border-blue-500 text-sm text-neutral-900  group/item whitespace-nowrap font-medium '
+                                            >
+                                                <td className='bg-blue-0 text-center '>
+                                                    <div className='flex items-center '>
+                                                        <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500'>
 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className=''>
-                                                <div className=' hover:text-red'>
-                                                    {item.name}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                {item.type}
-                                            </td>
-                                            <td>
-                                                {item.description}
-                                            </td>
-                                            <td>
-                                                {item.id}
-                                            </td>
-                                            <td>
-                                                {item.price}
-                                            </td>
-                                            <td 
-                                                className='w-9'>
-                                                <div 
-                                                    onClick={() => router.push('services/item')} 
-                                                    className='flex items-center justify-end'>
-                                                    <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
-                                                        <EllipsisVertical size={16} />
+                                                </td>
+                                                <td className=''>
+                                                    <div className=' hover:text-red'>
+                                                        {item.name}
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <div className='line h-[1px] w-full bg-white'></div>
-                                    </>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                                                </td>
+                                                <td>
+                                                    {item.type}
+                                                </td>
+                                                <td>
+                                                    {item.description}
+                                                </td>
+                                                <td>
+                                                    {item.id}
+                                                </td>
+                                                <td>
+                                                    {item.price}
+                                                </td>
+                                                <td 
+                                                    className='w-9'>
+                                                    <div 
+                                                        onClick={() => router.push('services/item')} 
+                                                        className='flex items-center justify-end'>
+                                                        <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
+                                                            <EllipsisVertical size={16} />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <div className='line h-[1px] w-full bg-white'></div>
+                                        </>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div className='flex justify-between mb-6'>
-                <h2 className='font-medium text-lg'>
-                    Pintura
-                </h2>
-            </div>
-            <div className='bg-white py-8 rounded mb-6 border '>
-                <table className='bg-white w-full '>
-                    <thead className=''>
-                        <tr className='h-10'>
-                            <th className='text-start text-xs bg-blue-0 w-16 font-normal text-zinc-700'></th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                Nome
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                Tipo
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                Descrição
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                ID
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                Valor (R$)
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className=''>
-                        {
-                            services.map(item => (
-                                <>
-                                    <tr className='h-12 border-l border-l-[3px] border-blue-0  hover:border-blue-500 text-sm text-[#53626b]  group/item '>
-                                    <td className='bg-blue-0 text-center '>
-                                        <div className='flex items-center justify-center'>
-                                            <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500 '>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className=''>
-                                        <span className='text-black hover:text-blue'>
-                                            {item.name}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {item.type}
-                                    </td>
-                                    <td>
-                                        {item.description}
-                                    </td>
-                                    <td>
-                                        {item.id}
-                                    </td>
-                                    <td>
-                                        {item.price}
-                                    </td>
-                                    <td className='w-9'>
-                                        <div className='flex items-center justify-end'>
-                                            <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
-                                                <EllipsisVertical size={16} />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <div className='line h-[1px] w-full bg-white'>
-                                    
-                                    </div>
-                                </>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div className='flex justify-between mb-6'>
-                <h2 className='font-medium text-lg'>
-                    Polimento
-                </h2>
-            </div>
-            <div className='bg-white py-8 rounded mb-6 border '>
-                <table className='bg-white w-full '>
-                    <thead className=''>
-                        <tr className='h-10'>
-                            <th className='text-start text-xs bg-blue-0 w-16 font-normal text-zinc-700'></th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                Nome
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>
-                                Tipo
-                            </th>
-                            <th className='text-start text-xs font-normal text-zinc-400' >Descrição</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>ID</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Valor (R$)</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'></th>
-                        </tr>
-                    </thead>
-                    <tbody className=''>
-                        {
-                            services.map(item => (
-                                <>
-                                    <tr className='h-12 border-l border-l-[3px] border-blue-0  hover:border-blue-500 text-sm text-[#53626b]  group/item '>
-                                    <td className='bg-blue-0 text-center '>
-                                        <div className='flex items-center justify-center'>
-                                            <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500 '></div>
-                                        </div>
-                                    </td>
-                                    <td className=''>{item.name}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.id}</td>
-                                    <td>{item.price} </td>
-                                    <td className=' w-9'>
-                                        <div className='flex items-center justify-end'>
-                                            <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
-                                                <EllipsisVertical size={16} />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <div className='line h-[1px] w-full bg-white'></div>
-                                </>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div className='flex justify-between mb-6'>
-                <h2 className='font-medium text-lg'>
-                    Plásticos e borrachados
-                </h2>
-            </div>
-             <div className='bg-white py-8 rounded mb-6 border '>
-                <table className='bg-white w-full '>
-                    <thead className=''>
-                        <tr className='h-10'>
-                            <th className='text-start text-xs bg-blue-0 w-16 font-normal text-zinc-700'></th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Nome</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Tipo</th>
-                            <th className='text-start text-xs font-normal text-zinc-400' >Descrição</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>ID</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Valor (R$)</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'></th>
-                        </tr>
-                    </thead>
-                    <tbody className=''>
-                        {
-                            services.map(item => (
-                                <>
-                                    <tr className='h-12 border-l border-l-[3px] border-blue-0  hover:border-blue-500 text-sm text-[#53626b]  group/item '>
-                                    <td className='bg-blue-0 text-center '>
-                                        <div className='flex items-center justify-center'>
-                                            <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500 '></div>
-                                        </div>
-                                    </td>
-                                    <td className=''>{item.name}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.id}</td>
-                                    <td>{item.price} </td>
-                                    <td className=' w-9'>
-                                        <div className='flex items-center justify-end'>
-                                            <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
-                                                <EllipsisVertical size={16} />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <div className='line h-[1px] w-full bg-white'></div>
-                                </>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div className='flex justify-between mb-6'>
-                <h2 className='font-medium text-lg'>
-                    Proteção de motor e metais
-                </h2>
-            </div>
-             <div className='bg-white py-8 rounded mb-6 border '>
-                <table className='bg-white w-full '>
-                    <thead className=''>
-                        <tr className='h-10'>
-                            <th className='text-start text-xs bg-blue-0 w-16 font-normal text-zinc-700'></th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Nome</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Tipo</th>
-                            <th className='text-start text-xs font-normal text-zinc-400' >Descrição</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>ID</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Valor (R$)</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'></th>
-                        </tr>
-                    </thead>
-                    <tbody className=''>
-                        {
-                            services.map(item => (
-                                <>
-                                    <tr className='h-12 border-l border-l-[3px] border-blue-0  hover:border-blue-500 text-sm text-[#53626b]  group/item '>
-                                    <td className='bg-blue-0 text-center '>
-                                        <div className='flex items-center justify-center'>
-                                            <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500 '></div>
-                                        </div>
-                                    </td>
-                                    <td className=''>{item.name}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.id}</td>
-                                    <td>{item.price} </td>
-                                    <td className=' w-9'>
-                                        <div className='flex items-center justify-end'>
-                                            <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
-                                                <EllipsisVertical size={16} />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <div className='line h-[1px] w-full bg-white'></div>
-                                </>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div className='flex justify-between mb-6'>
-                <h2 className='font-medium text-lg'>
-                    Serviços extras
-                </h2>
-            </div>
-             <div className='bg-white py-8 rounded mb-6 border '>
-                <table className='bg-white w-full '>
-                    <thead className=''>
-                        <tr className='h-10'>
-                            <th className='text-start text-xs bg-blue-0 w-16 font-normal text-zinc-700'></th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Nome</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Tipo</th>
-                            <th className='text-start text-xs font-normal text-zinc-400' >Descrição</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>ID</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'>Valor (R$)</th>
-                            <th className='text-start text-xs font-normal text-zinc-400'></th>
-                        </tr>
-                    </thead>
-                    <tbody className=''>
-                        {
-                            services.map(item => (
-                                <>
-                                    <tr className='h-12 border-l border-l-[3px] border-blue-0  hover:border-blue-500 text-sm text-[#53626b]  group/item '>
-                                    <td className='bg-blue-0 text-center '>
-                                        <div className='flex items-center justify-center'>
-                                            <div className=' h-4 w-4 border  border-zinc-300 rounded hover:border-blue-500 '></div>
-                                        </div>
-                                    </td>
-                                    <td className=''>{item.name}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.id}</td>
-                                    <td>{item.price} </td>
-                                    <td className=' w-9'>
-                                        <div className='flex items-center justify-end'>
-                                            <div className='w-8 h-8 rounded-full hover:bg-zinc-50 flex justify-center items-center'>
-                                                <EllipsisVertical size={16} />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <div className='line h-[1px] w-full bg-white'></div>
-                                </>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div className='flex justify-between mb-6'>
-                <h2 className='font-medium text-lg'>
-                    Eletrônicos
-                </h2>
-            </div>
-            <div className='h-40 w-full bg-white rounded mb-6 gap-6 flex flex-col items-center justify-center'>
+            
+            <div className='h-40 w-full bg-white rounded mb-6 gap-6 flex flex-col items-center justify-center border-b-[4px] border-l-[1px] border'>
                 Sem produtos cadastrados
                 <button className='h-10 border border-black w-min px-6 whitespace-nowrap  text-sm font-semibold rounded '>
                     Adicionar serviço

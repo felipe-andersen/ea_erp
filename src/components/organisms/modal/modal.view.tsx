@@ -5,7 +5,7 @@ import { Children, Dispatch, ReactNode, SetStateAction, useEffect, useState } fr
 type ModalType = {
     isOpen: boolean;
     onClose: Dispatch<SetStateAction<boolean>>;
-    children: React.ReactNode
+    children: React.ReactNode;
 };
 
 export function Modal({isOpen, onClose, children}: ModalType)  {
@@ -36,13 +36,13 @@ export function Modal({isOpen, onClose, children}: ModalType)  {
 
     return (
         <div
-            onClick={() => onClose(false)}
-            className="fixed z-[1007] top-0 bottom-0 right-0 left-0 flex items-center justify-center bg-black bg-opacity-50 "
+            onClick={() => onClose(!isOpen)}
+            className="fixed z-[1030] top-0 bottom-0 right-0 left-0 flex items-center justify-center bg-black bg-opacity-30 "
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
         >
             {children}
         </div>
-    );
-};
+    )
+}

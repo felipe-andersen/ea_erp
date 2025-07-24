@@ -39,9 +39,9 @@ export function Header ({
     }
 
     return (
-        <header  className='w-full h-12 sm:h-12  flex flex-col fixed bg-white  z-[1030] border-b '>
-            <div className='w-full h-full  flex items-center justify-between px-4 '>
-                <span className="flex gap-2">
+        <header  className='w-full h-14 sm:h-14  flex flex-col fixed bg-white  z-[1030] border-b '>
+            <div className='w-full h-full  flex items-center justify-between sm:px-8 '>
+                <span className="flex gap-2 bg-red-0">
                     <button 
                         onClick={() =>  createPortal(<SideBar isVisibleTitle={true}/>, document.body)} 
                         className="text-xl flex items-center gap-2 "
@@ -76,6 +76,9 @@ export function Header ({
                         >
                             Upgrade
                         </button>
+                        <div className="w-[300px] h-10 rounded-sm px-3 bg-neutral-100">
+                            <input className="w-full h-full bg-transparent outline-none" placeholder="Pesquisar" type="search"/>
+                        </div>
                         <button 
                             onClick={() => {}}
                             className="w-10 h-10  hover:bg-zinc-50 rounded-full flex items-center justify-center relative"

@@ -31,17 +31,17 @@ export interface Worker {
 
 export function Main() {
     return (
-    <main className='  bg-[#f6f8fa]  h-full ml-80 mt-16 overflow-scroll mr-1 '>
+    <main className='w-full bg-neutral- bg-[#f2f4f7] h-full  overflow-scroll p-5'>
         <div className='w-full h-min relative  p-6 flex flex-col '>
             <div className='flex flex-col mb-10 gap-3 '>
                 <h2 className='text-2xl font-semibold'>Colaborador</h2>
-                <p className='text-zinc-400'>Lista de colaboradores cadastrados</p>
+                <p className='text-zinc-600'>Lista de colaboradores cadastrados</p>
             </div>
             <div className='flex  gap-3 mb-6 items-
             center w-full justify-between' >
-                <p className='text-zinc-600 text-md underline'>10 colaboradores cadastrados</p>
+              
                 <div className='flex gap-3'>
-                <button className='h-10 w-min px-3 whitespace-nowrap  text-white text-[13px] font-semibold rounded bg-blue-600 hover:bg-blue-500 '>
+                <button className='h-10 w-min px-3 whitespace-nowrap  text-white text-sm font-medium rounded bg-gray-900 hover:bg-gray-800 '>
                     Cadastrar colaborador
                 </button>
                 <button className='hidden text-black h-10 w-min px-3 whitespace-nowrap text-sm font-semibold rounded border border-neutral-400 text-black'>
@@ -51,7 +51,7 @@ export function Main() {
             </div>
             {/* Eventos 
             poarcerias e brindes */}
-            <div className='text-lg h-16 flex items-center border-b border-zinc-300 mb-6'>Estatística de colaborador</div>
+            {/* <div className='text-lg h-16 flex items-center border-b border-zinc-300 mb-6'>Estatística de colaborador</div> */}
             <div className=' h-16 flex items-center justify-between border-b border-zinc-300 mb-6'>
                 <div className='text-lg'>Lista de colaborador</div>
                 <div className='flex '>

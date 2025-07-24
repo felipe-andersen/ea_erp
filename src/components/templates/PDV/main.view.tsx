@@ -3,15 +3,13 @@ import { ArrowBigRight, ArrowRightIcon, ArrowUpRight, ArrowUpRightIcon, ChevronL
 import Link from "next/link";
 import { NewSale } from "@/components/organisms/forms/newSale";
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import { Modal } from "@/components/organisms/modal/modal.view";
 
 
 export function Main() {
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
-        <main className="w-full h-full mt-16 p-3 sm:p-6 bg-[#f6f8fa]  top-16 bottom-16 flex flex-col gap-5 overflow-y-scroll">
+        <main className="w-full h-full mt-16 p-3 sm:p-6 bg-white bg-[#f6f8fa]  top-16 bottom-16 flex flex-col gap-5 overflow-y-scroll">
             {
                  <Modal
                     onClose={setIsModalOpen}
@@ -22,7 +20,6 @@ export function Main() {
                     />
                 </Modal>
             }
-                
             {/* <div className="h-16 w-full flex items-center justify-between gap-5">
                 <div className="flex items-center gap-2">
                     <button
@@ -52,29 +49,65 @@ export function Main() {
                 </div>
             </div> */}
             <div className="flex gap-5 w-full h-full flex-col">
-            <div className="border border-zinc-200 w-full h-80 rounded bg-white flex flex-col sm:flex-start gap-5 p-5  h-full ">
-                    <div className="flex justify-between bg-red-0 w-full">
-                        <div className="flex flex-col gap-2">
-                            <h3 className="font-semibold text-lg">
-                                Vendas
-                            </h3>
-                            <p className="text-neutral-600">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
-                            </p>
-                        </div>
-                        {/* <div className="flex gap-2">
-                            <EllipsisIcon size={18}/>
-                            <Maximize2 size={18}/>
-                        </div> */}
-                    </div>
-                    <div className="flex flex-col gap-3 py-0 h-full w-full bg-red-0">
+
+            <div className=" w-full h-80   flex flex-col  sm:flex-start gap-5 p-5  h-full ">
+                    <span className="flex flex-col gap-2 w-full">
+                        <h3 className="font-semibold text-lg">
+                            Vendas
+                        </h3>
+                        <p className="text-neutral-600">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
+                        </p>
+                    </span>
+                    {/* <div className="flex gap-2">
+                        <EllipsisIcon size={18}/>
+                        <Maximize2 size={18}/>
+                    </div> */}
+                    <div className="flex gap-3 py-0 h-full w-full bg-red-0 w-min">
                         <button 
                             onClick={() => setIsModalOpen(true)}
-                            className=" border-[2px]  h-10 px-3 rounded  text-sm  whitespace-nowrap w-full max-w-[400px] flex items-center justify-between 
-                            bg-teal-500  border-transparent hover:border-teal-500  text-white font-semibold"
+                            className="aspect-square w-[120px] h-[120px] py-4 px-3 hover:p-3 rounded text-sm flex  justify-between 
+                            bg-neutral-0 font-semibold  flex-col text-start items-start gap-3  border border-[2px] border-neutral-600"
                         >
-                            Nova venda
-                            <ChevronRight size={17} className="-mr-2"/>
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span> Nova venda</span>
+                          
+                        </button>
+                        <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
+                            bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span>Consultar tickets vendidos</span>
+                          
+                        </button>
+                        <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
+                            bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className ="-mr-2"/>
+                            <span>Consultar inventário</span>
+                          
+                        </button>
+                        <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
+                            bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span>Outros serviços</span>
+                          
+                        </button>
+                        <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
+                            bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span>Vender volume de bagagem</span>
+                          
                         </button>
                         {/* <button className="p-4 min-w-[100px] w-full  rounded flex flex-col gap-2 bg-neutral-0 aspect-square m-0 max-w-[120px] max-h-[120px] border flex flex-col items-stretch content-between text-xs font-semibold">
                             <div className="h-3/6 flex items-start bg-red-0">
@@ -84,43 +117,46 @@ export function Main() {
                                 Meus Serviços
                             </span>
                         </button> */}
-                        <button className="border-[2px]  h-10 px-3 rounded font-semibold text-sm  whitespace-nowrap w-full max-w-[400px] flex items-center justify-between 
-                        bg-teal-100  border-transparent   text-teal-700 ">
-                            Novo orçamento
-                            <ChevronRight size={17} className="-mr-2"/>
-                        </button>
-                        <Link 
-                            href={""}
-                            className="h-8 border-b-[1px] border-neutral-700 text-sm flex items-center justify-between mt-5 -mb-0 text-neutral-700"
-                        >
-                            Consultar ordem de serviço
-                            <ArrowUpRightIcon size={18} strokeWidth={1}/>
-                        </Link>
+                       
                     </div>
                 </div>
-                <div className="border border-zinc-200 w-full h-80 rounded bg-white flex flex-col sm:flex-start gap-5 p-5 h-full ">
-                    <div className="flex justify-between bg-red-0 w-full">
-                        <div className="">
+                <hr/>
+                <div className=" w-full h-80  bg-white flex flex-col sm:flex-start gap-5 p-5 h-full ">
+                   
+                        <span className="">
                             <h3 className="font-semibold text-lg">
                                 Caixa
                             </h3>
-                            <p className="text-sm">
+                            <p className="text-neutral-700">
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
                             </p>
-                        </div>
+                        </span>
                         {/* <div className="flex gap-2">
                             <EllipsisIcon size={18}/>
                             <Maximize2 size={18}/>
                         </div> */}
-                    </div>
-                    <div className="flex flex-col gap-3 py-6 h-full w-full bg-red-0">
-                        <button className="bg-neutral-0  hover:bg-blue-0 text-neutral-900 border-neutral-900 border-[1px]  h-10 px-3 rounded font- text-sm  whitespace-nowrap w-full max-w-[400px] flex items-center justify-between">
-                            Pagar
-                            <ChevronRight size={17} 
-                                className="-mr-2" 
-                                strokeWidth={1}
-                            />
+                   
+                    <div className="flex flex gap-3 py-6 h-full w-full bg-red-0 flex-wrap">
+                        <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
+                            bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span>Pagar</span>
+                          
                         </button>
+                        
+                        <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
+                            bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span>Receber</span>
+                          
+                        </button>
+                        
                         {/* <button className="p-4 min-w-[100px] w-full  rounded flex flex-col gap-2 bg-neutral-0 aspect-square m-0 max-w-[120px] max-h-[120px] border flex flex-col items-stretch content-between text-xs font-semibold">
                             <div className="h-3/6 flex items-start bg-red-0">
                                 <PenTool size={22} strokeWidth={1}  stroke="#006421"/>
@@ -129,46 +165,37 @@ export function Main() {
                                 Meus Serviços
                             </span>
                         </button> */}
-                        <button className="bg-neutral-0  hover:bg-blue-0 text-neutral-900 border-neutral-900 border-[1px]  h-10 px-3 rounded font- text-sm  whitespace-nowrap w-full max-w-[400px] flex items-center justify-between">
-                            Receber
-                            <ChevronRight size={17} 
-                                className="-mr-2" 
-                                strokeWidth={1}
-                            />
+                       
+                        <button 
+                            className="w-full[120px] h-[120px] p-3 rounded text-sm flex  justify-between min-w-[120px]
+                            bg-blue-100 border-transparent max-w-[240px] font-semibold  flex-col text-start items-start gap-3 min-w-30"
+                        >
+                            <ArrowUpRightIcon size={17} className="-mr-2"/>
+                            <span>Receber</span>
                         </button>
-                        <button className="bg-neutral-0  hover:bg-blue-0 text-neutral-900 border-neutral-900 border-[1px]  h-10 px-3 rounded font- text-sm  whitespace-nowrap w-full max-w-[400px] flex items-center justify-between">
-                            Estornar
-                            <ChevronRight size={17} 
-                                className="-mr-2" 
-                                strokeWidth={1}
-                            />
-                        </button>
-
                         <Link 
                             href={""}
-                            className="h-8 border-b-[2px] border-neutral-700 text-sm flex items-center justify-between"
+                            className="h-10 rounded-sm flex items-center justify-between mt-5 -mb-0 w-min whitespace-nowrap underline font-semibold px-3 text-sm"
                         >
                             Ver histórico de transação
-                            <ArrowUpRightIcon size={18} />
                         </Link>
                     </div>
                 </div>
-                <div className="border border-zinc-200 w-full h-min rounded bg-white flex flex-col p-5 ">
-                    <div className="flex justify-between">
-                        <div className="">
-                            <h3 className="font-semibold ">
-                                Resumo do dia
-                            </h3>
-                            <span className="text-xs text-zinc-400 mt-[-12px]">
-                                Hoje
-                            </span>
-                        </div>
-                        <div className="flex gap-2">
-                            <EllipsisIcon size={18}/>
-                            <Maximize2 size={18}/>
-                        </div>
+                <hr/>
+                <div className="  w-full h-min  flex flex-col p-5 ">
+                    <div className="">
+                        <h3 className="font-semibold text-lg">
+                            Resumo do dia
+                        </h3>
+                        <span className="text text-neutral-700 mt-[-12px]">
+                            Hoje
+                        </span>
                     </div>
-                    <div className="py-5 flex flex-col gap-3">
+                    {/* <div className="flex gap-2">
+                        <EllipsisIcon size={18}/>
+                        <Maximize2 size={18}/>
+                    </div> */}
+                    <div className="py-5 flex flex-col gap-6 w-min">
                         <div className="flex flex items-center gap-2  w-full justify-between">
                             <div className="flex items-center gap-2 ">
                                 <div className="h-5 w-5 rounded-full bg-neutral-200 flex items-center justify-center">
@@ -179,7 +206,7 @@ export function Main() {
                                         fill="#c0c0c0"
                                     />
                                 </div>
-                                <div className="text-sm">
+                                <div className="text-">
                                     Vendas
                                 </div>
                             </div>
@@ -187,41 +214,58 @@ export function Main() {
                                 7
                             </span>
                         </div>
-                        <span className=" border-[1px]"></span>
-                        <div className="flex flex items-center gap-2 hover:bg-zinc-50 p-2">
-                            <div className="h-9 w-9 rounded-full bg-green-200 flex items-center justify-center">
-                                <ShoppingBag 
-                                    className="" 
-                                    size={18} 
-                                    color="#1a972b"
-                                />
+                        <div className="flex flex items-center gap-2  w-full justify-between">
+                            <div className="flex items-center gap-2 ">
+                                <div className="h-5 w-5 rounded-full bg-neutral-200 flex items-center justify-center">
+                                    <Circle 
+                                        className="opacity-100" 
+                                        size={10} 
+                                        strokeWidth={0}
+                                        fill="#c0c0c0"
+                                    />
+                                </div>
+                                <div className="text-">
+                                    Pagamentos
+                                </div>
                             </div>
-                            <span className="text-sm">
-                                Pagamentos
+                            <span className="text-  font-bold flex items-center justify-center">
+                                7
                             </span>
                         </div>
-                        <span className="line border"></span>
-                        <div className="flex flex items-center gap-2 p-2">
-                            <div className="h-9 w-9 rounded-full bg-green-200 flex items-center justify-center">
-                                <ShoppingBag 
-                                    size={18} 
-                                    color="#1a972b"
-                                />
+                         <div className="flex flex items-center gap-2  w-full justify-between">
+                            <div className="flex items-center gap-2 ">
+                                <div className="h-5 w-5 rounded-full bg-neutral-200 flex items-center justify-center">
+                                    <Circle 
+                                        className="opacity-100" 
+                                        size={10} 
+                                        strokeWidth={0}
+                                        fill="#c0c0c0"
+                                    />
+                                </div>
+                                <div className="text-">
+                                    Recebimentos
+                                </div>
                             </div>
-                            <span className="text-sm">
-                                Recebimentos
+                            <span className="text-  font-bold flex items-center justify-center">
+                                7
                             </span>
                         </div>
-                        <span className=" border-[1px]"></span>
-                        <div className="flex flex items-center gap-2 p-2">
-                            <div className="h-9 w-9 rounded-full bg-green-200 flex items-center justify-center">
-                                <ShoppingBag 
-                                    size={18} 
-                                    color="#1a972b"
-                                />
+                         <div className="flex flex items-center gap-2  w-full justify-between">
+                            <div className="flex items-center gap-2 ">
+                                <div className="h-5 w-5 rounded-full bg-neutral-200 flex items-center justify-center">
+                                    <Circle 
+                                        className="opacity-100" 
+                                        size={10} 
+                                        strokeWidth={0}
+                                        fill="#c0c0c0"
+                                    />
+                                </div>
+                                <div className="text-">
+                                    Estornos
+                                </div>
                             </div>
-                            <span className="text-sm">
-                                Estornos
+                            <span className="text-  font-bold flex items-center justify-center">
+                                7
                             </span>
                         </div>
                     </div>
@@ -353,7 +397,16 @@ export function Main() {
                     </div>
                 </div> */}
             </div>
-            Apurar caixa
+           <button 
+                className="   h-10 px-3 rounded  text-sm  whitespace-nowrap w-full max-w-[400px] flex items-center justify-between 
+                bg-green-500  border-transparent   text-white font-semibold w-min"
+            >
+                Apurar caixa
+                {/* <ChevronRight size={17} 
+                    className="-mr-2" 
+                    strokeWidth={1}
+                /> */}
+            </button>
         </main>
     )
 }
