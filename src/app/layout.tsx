@@ -1,37 +1,61 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import {Aleo, Archivo, Quicksand, Lexend } from "next/font/google";
 import "./globals.css";
-import Providers from "./providers";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { initalizeTracing } from "@/instrumentation";
+import Head from "next/head";
+import Script from "next/script";
 
 
-// initalizeTracing()
+const quicksand = Quicksand({
+    variable: "--font-quicksand",
+    subsets: ["latin"],
+});
 
-const inter = Inter({ subsets: ["latin"] });
-const queryClient = new QueryClient()
+const lexend = Lexend({
+    variable: "--font-lexend",
+    subsets: ["latin"],
+});
+  
+const archivo = Archivo({
+    variable: "--font-archivo-serif",
+    subsets: ["latin"],
+});
+  
+
+const aleoSerif = Aleo({
+    variable: "--font-aleo-serif",
+    subsets: ["latin"],
+});
+
+
+
 export const metadata: Metadata = {
-    title: "UI",
-    description: "UI",
+    title: "Embarque Angra",
+    description: "Aproveite o melhor de Angra dos Reis com experiências únicas",
 };
 
 export default function RootLayout({
     children,
     }: Readonly<{
     children: React.ReactNode;
-    }>) {
+}>) {
     return (
         <html lang="en">
-             <head>
-                <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" />
-                <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></link>
-            </head>
-            <body className={`inter.className`}>
-                {/* <Providers> */}
-                    {children}  
-                {/* </Providers> */}
+            <body
+                className={`${lexend.variable} ${quicksand.variable} ${aleoSerif.variable} ${archivo.variable} antialiased flex justify-center w-full bg-neutral-100 overflow-hidden`}
+            >
+                <Script 
+                    src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"
+                    strategy="afterInteractive"
+                    // onLoad={() => {
+                    //     // Se a lib global estiver no window
+                    //     // if (typeof window !== 'undefined') {
+                    //     //     console.log('Script carregado!');
+                    //         // window.minhaLib.init();
+                    //     }
+                    // }}
+                />
+                {children}
             </body>
         </html>
-    );
+    )
 }

@@ -39,8 +39,8 @@ export function Header ({
     }
 
     return (
-        <header  className='w-full h-14 sm:h-14  flex flex-col fixed bg-white  z-[1030] border-b '>
-            <div className='w-full h-full  flex items-center justify-between sm:px-8 '>
+        <header  className='w-full h-14 sm:h-14 flex sticky top-0 bg-white z-[1030] border-b'>
+            <div className='w-full h-full flex items-center justify-between sm:px-8 max-w-[1550px]'>
                 <span className="flex gap-2 bg-red-0">
                     <button 
                         onClick={() =>  createPortal(<SideBar isVisibleTitle={true}/>, document.body)} 

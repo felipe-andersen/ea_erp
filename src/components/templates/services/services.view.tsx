@@ -8,11 +8,11 @@ export function ServicesList() {
     return (
         
         <div 
-            className=" w-[100vw] h-[100vh] overflow-hidden"
+            className="flex flex-col w-full h-full overflow-hidden"
             data-testid="services-template"
         >
             <Header pageName="ORM"/>
-              <div className="flex h-[calc(100%-56px)] fixed bg-neutral-100 w-full mt-14">
+            <div className="flex h-[calc(100vh-48px)] bg-neutral-100 w-full">
                 <SideBar isVisibleTitle/>
                 <Main/>
             </div>

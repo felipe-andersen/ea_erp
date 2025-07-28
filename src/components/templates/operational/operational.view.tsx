@@ -5,12 +5,12 @@ import SideBar from "@/components/organisms/side-bar/side-bar.view";
 
 export default function Operational() {
     return (
-        <>
+        <div className="flex flex-col w-full">
             <Header pageName="ERP" />
-            <div className="flex h-[calc(100%-56px)] fixed bg-neutral-100 w-full mt-14">
+            <div className="flex h-full bg-neutral-100 w-full">
                 <SideBar isVisibleTitle/>
                 <Content />
             </div>
-        </>
+        </div>
     )
 }

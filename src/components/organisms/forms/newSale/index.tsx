@@ -1,5 +1,5 @@
 'use client'
-import { ArrowLeft, CalendarDays, ChevronLeft, ChevronRight, Minus, Plus, Search, SidebarCloseIcon, UserRound, Watch, X } from "lucide-react";
+import { ArrowLeft, CalendarDays, ChevronLeft, ChevronRight, Minus, Plus, PlusIcon, Search, SidebarCloseIcon, UserRound, Watch, X } from "lucide-react";
 import { useForm, SubmitHandler, UseFormSetValue, Controller, useFieldArray } from "react-hook-form"
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -102,7 +102,7 @@ export function NewSale({setShowModal}:Props) {
         event.preventDefault();
     };
 
-    function newService() {
+    function newTicket() {
         append(srv)
     }
 
@@ -111,11 +111,13 @@ export function NewSale({setShowModal}:Props) {
     }
 
     return (
-        <div 
-            onClick={(e) => e.stopPropagation()}
-            className="fixed w-full h-[calc(100%-0px)] sm:h-[calc(100%-0px)]  top-0 z-[3000]  bg-[rgba(1,1,1,0.5)] flex justify-center sm:py-6">
+        < 
+           >
 
-            <div className='flex flex-col w-full max-w-[560px] h-full p-0  bg-white   gyhd sm:rounded-2xl '>
+            <div 
+            onClick={(e) => e.stopPropagation()}
+            className='flex flex-col w-full max-w-[560px] h-full p-0  bg-white gyhd sm:rounded-2xl max-h-[90%]'
+            >
                 <div className="flex h-14 border-b items-center bg-neutral-0 gap-3 justify-between px-3 sm:px-6">
                     <div className={`hidden`}>
                         <ArrowLeft/>
@@ -132,7 +134,7 @@ export function NewSale({setShowModal}:Props) {
                 </div>
                 <form
 
-                    onChange={(e) => e.stopPropagation()}
+                    // onChange={(e) => e.stopPropagation()}
                     onSubmit={prevent}
                     className='w-full h-[calc(100%-56px)] px-3 sm:px-6 py-3 bg-red-X overflow-y-scroll overflow-x-hidden '>
                     {/* <div className="fixed w-full bg-white flex items-center justify-between 0,0gap-5 h-12 -mt-6 mb-10 border-b bg-red-0 -ml-6 px-6">
@@ -203,10 +205,10 @@ export function NewSale({setShowModal}:Props) {
                         </div> */}
                         {/* name */}
                         <div className='gap-1 h-min mb-4 flex flex-col'>
-                            <label className="text-xs font-semibold text-gray-700">
+                            <label className="text-sm font-medium text-gray-700">
                                 <span className="text-red-600">*</span> Nome
                             </label>
-                            <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                                 <input
                                     data-test="full-name"
                                     className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
@@ -306,9 +308,6 @@ export function NewSale({setShowModal}:Props) {
                                 </p>
                             }
                         </div>
-                        <button className='text-xs'>
-                            ADICIONAR ENDEREÇO
-                        </button>
                     </div>
                     {/* <div className="w-full ">
                         <h3 className='text-md font-bold mt-10 mb-5'>Informações do veículo</h3>
@@ -341,56 +340,89 @@ export function NewSale({setShowModal}:Props) {
                             </div>
                         </div>
                     </div> */}
+                    <hr className="my-3"></hr>
                     <div className="w-full ">
                         <span className="flex justify-between items-center bg-neutral-00 mt-10 mb-5">
-                            <h3 className='text-md font-bold '>
-                                Cadastrar serviço
+                            <h3 className='text-md font-bold'>
+                                Experiência
                             </h3>
-                            <div className='flex  gap-1 text-gray-700'>
-                                <button title="Add" onClick={() => newService()} className='flex items-center gap-2 text-sm bg-zinc-0 h-5  w-min whitespace-nowrap  border-b-[2px] border-neutral-600'>
-                                    {/* <Plus size={22} /> */}
-                                    Adicionar
-                                </button>
-                            </div>
                         </span>
+                        <button
+                            className="px-3 py-2 bg-gray-100 text-sm rounded-sm"
+                            onClick={() => newTicket()}
+                        >
+                            Novo ticket
+                        </button>
+                        <div 
+                            className="flex flex-col w-full  mb-4"
+                        >
+                            <p className="block text-sm text-gray-700">
+                                Selecione a experiencia
+                            </p>
+                            <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded hover:border-zinc-400">
+                                <select
+                                    value={selectedValue} 
+                                    onChange={handleChange}
+                                    className="w-full h-full bg-white outline-none" 
+                                    id="cars"
+                                >
+                                    <option className="h-8" value="select">selecionar</option>
+                                    <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
+                                    <option className="h-8" value="volvo">Volvo</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option className="h-8" value="select">selecionar</option>
+                                    <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
+                                    <option className="h-8" value="volvo">Volvo</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option className="h-8" value="select">selecionar</option>
+                                    <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
+                                    <option className="h-8" value="volvo">Volvo</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option className="h-8" value="select">selecionar</option>
+                                    <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
+                                    <option className="h-8" value="volvo">Volvo</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                        </div>
                         {/* service */}
                         {fields.map((field, index) => {
                             return (
-                                <div className="border rounded-xl relative py-10 px-3 border-[2px] border-zinc-200 hover:border-zinc-400 mb-8">
+                                <div className="border rounded-xl relative py-10 px-3 border-[1px] border-zinc-200 mb-8">
                                     <button
-                                        className="absolute top-0 right-0 rounded-full w-8 h-8 flex items-center justify-center fborder-[2px] -mt-4 mr-4  border bg-neutral-100"
+                                        className="absolute top-0 right-0 rounded-full w-8 h-8 flex items-center justify-center fborder-[2px] -mt-4 mr-4  bg-red-100"
                                         onClick={() => removeService(index)}
                                     >
-                                        <Minus size={20}/>
+                                        <Minus size={16} color="red"/>
                                     </button>
+                                   
                                     <div 
-                                        className='gap-2 h-min mb-4 ' 
                                         key={field.id}
+                                        className="flex flex-col w-full  mb-4"
                                     >
-                                        <span className='mb-2'>
-                                            <label className='text-sm mb-4 text-gray-700'>
-                                                Serviço (item)
-                                            </label>
-                                        </span>
-                                        <br />
-                                        <div className="flex items-center">
-                                            <input 
-                                                placeholder="Digite ou selecione" 
-                                                className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded pl-5' 
-                                            />
-                                            <button className='flex items-center gap-2 text-sm bg-zinc-0 h-10 px-3 w-min whitespace-nowrap rounded'>
-                                                <Search size={18} />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col w-full  mb-4">
                                         <p className="block text-sm text-gray-700">
-                                            Para o veículo {selectedValue}
+                                            Selecione a faixa etária ou categoria
                                         </p>
                                         <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded">
                                             <select
-                                                value={selectedValue} 
-                                                onChange={handleChange}
+                                               
+                                               
                                                 className="w-full h-full bg-white outline-none" 
                                                 id="cars"
                                             >
@@ -405,190 +437,78 @@ export function NewSale({setShowModal}:Props) {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="flex gap-3 mb-4 ">
-                                        <div className="flex flex-col w-full">
-                                            <p className="block text-sm text-gray-700">
-                                                Marca
-                                            </p>
-                                            <input
-                                                // name='brand'
-                                                maxLength={30}
-                                                aria-label="" 
-                                                type="text" 
-                                                placeholder=""
-                                                disabled={selectedValue === 'select' ? false : true}
-                                                className=' disabled:bg-neutral-100 disabled:text-neutral-500 outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                            ></input>
-                                        </div>
-                                        <div className="flex flex-col w-full">
-                                            <p className="block text-sm  text-gray-700">
-                                                Modelo
-                                            </p>
-                                            <input
-                                                disabled={selectedValue === 'select' ? false : true}
-                                                aria-label="" 
-                                                type="text"  
-                                                maxLength={30} 
-                                                placeholder="" 
-                                                className='disabled:bg-neutral-100 outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                            ></input>
-                                        </div>
-                                        <div className="flex flex-col w-full">
-                                            <p className="block text-sm  text-gray-700">
-                                                Placa
-                                            </p>
-                                            <input
-                                                disabled={selectedValue === 'select' ? false : true}
-                                                aria-label=""
-                                                maxLength={30}
-                                                type="text" 
-                                                placeholder="" 
-                                                className='disabled:bg-neutral-100 disabled:text-neutral-300 outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                            ></input>
-                                        </div>
-                                    </div>
-                                    <div className="mb-4">
-                                        <span className="text-sm text-zinc-700">
-                                            Detalhes
-                                        </span>
-                                        <textarea 
-                                            className='mt-2 flex gap-3 w-full h-24 border border-zinc-300 rounded'
-                                            maxLength={300} 
+                                    <div className="flex flex-col w-full mb-4">
+                                        <p className="block text-sm text-gray-700">
+                                            Nome Completo
+                                        </p>
+                                        <input
+                                            {...register("totalPriceBRL")}
+                                            aria-label="Valor"
+                                            placeholder="0,00"
+                                            type="text" // decimal number
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
+                                            value={watch('totalPriceBRL')}
                                         />
+                                    
                                     </div>
-                                    <div className='gap-2 h-min mb-4'>
-                                        <span className='mb-2'>
-                                            <label className='text-sm mb-4 text-gray-700'>
-                                                Duração do serviço
-                                            </label>
-                                        </span>
-                                        <br />
-                                        <div className="flex ">
-                                            <input 
-                                                placeholder="00:00" 
-                                                className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded pl-5' 
-                                            />
-                                        </div>
+                                    <div className="flex flex-col w-full mb-4">
+                                        <p className="block text-sm text-gray-700">
+                                            Tipo de documentp
+                                        </p>
+                                        <input
+                                            {...register("totalPriceBRL")}
+                                            aria-label="Valor"
+                                            placeholder="0,00"
+                                            type="text" // decimal number
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
+                                            value={watch('totalPriceBRL')}
+                                        />
+                                    
                                     </div>
-                                    <div className=" w-full">
-                                        {/* <h3 className="text-xs font-bold  mt-6 mb-5">Agenda</h3> */}
-                                        <Schedule />
-                                        <div className="flex gap-3 items-center">
-                                            <p className="block text-sm  text-gray-700">
-                                                Não agendar 
-                                            </p>
-                                            <Switch
-                                                checked={doNotSchedule}
-                                                onCheckedChange={() => setDoNotSchedule(doNotSchedule == false ? true : false)}
-                                            />
-                                            {/* <button className="h-9 w-16 rounded-full flex border px-1 items-center scale-50">
-                                                <div className="h-7 w-7 rounded-full bg-neutral-300" />
-                                            </button> */}
-                                        </div>
-                                        {/* start date */}
-                                        { !doNotSchedule && <div>
-                                            <div className="flex gap-3">
-                                                <div className="flex flex-col w-full">
-                                                    <p className="block text-sm  text-gray-700">
-                                                        Data e hora de entrada
-                                                    </p>
-                                                    <div className="flex flex gap-3">
-                                                        <input
-                                                            className="outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5"
-                                                            // name="fullName" 
-                                                            spellCheck="false"
-                                                            type="date"
-                                                            {...register(`servicesList.${index}.scheduledDate`)}
-                                                            aria-invalid={errors.date ? "true" : "false"}
-                                                        />
-                                                        <input
-                                                            className="outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5"
-                                                            // name="scheduledTime" 
-                                                            placeholder="00:00"
-                                                            maxLength={5}
-                                                            spellCheck="false"
-                                                            type="text"
-                                                            {...register(`servicesList.${index}.scheduledDate`)}
-                                                            aria-invalid={errors.date ? "true" : "false"}
-                                                        />
-                                                    </div>
-                                                    {
-                                                        // errors.scheduledDate?.message &&
-                                                        // <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
-                                                        //     {errors.scheduledDate?.message}
-                                                        // </p>
-                                                    }
-                                                    {
-                                                        // errors.scheduledTime?.message &&
-                                                        // <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
-                                                        //     {errors.scheduledTime?.message}
-                                                        // </p>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="flex gap-3">
-                                                <div className="flex flex-col w-full">
-                                                    <div className="flex items-center gap-2">
-                                                        <p className="block text-sm  text-gray-700">
-                                                            Data e hora de entrega
-                                                        </p>
-                                                        <button className="h-9 w-16 rounded-full flex border px-1 items-center scale-50">
-                                                            <div className="h-7 w-7 rounded-full bg-neutral-300" />
-                                                        </button>
-                                                    </div>
-
-                                                    <div className="flex flex gap-3">
-                                                        <input 
-                                                            aria-label="Data" 
-                                                            type="date"
-                                                            {...register(`servicesList.${index}.scheduledDate`)}
-                                                            placeholder="Data" 
-                                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                                        />
-                                                        <input
-                                                        {...register(`servicesList.${index}.scheduledDate`)}
-                                                            aria-label="Hora"
-                                                            maxLength={5}
-                                                            // minLength={8}
-                                                            type="text"
-                                                            placeholder="00:00" 
-                                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                                        />
-                                                    </div>
-                                                    {/* {
-                                                        errors.deliveryDate?.message &&
-                                                        <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
-                                                            {errors.deliveryDate?.message}
-                                                        </p>
-                                                    } */}
-                                                    {/* {
-                                                        errors.deliveryTime?.message &&
-                                                        <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
-                                                            {errors.deliveryTime?.message}
-                                                        </p>
-                                                    } */}
-
-                                                    <p className="block text-sm  text-gray-700">
-                                                    Vaga
-                                                    </p>
-                                                    <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded flex items-center">
-                                                        <select
-                                                            // value={selectedValue} 
-                                                            // onChange={handleChange}
-                                                            className="w-full h-full bg-white outline-none mr-2" 
-                                                            id="cars"
-                                                        >
-                                                            <option className="" value="vaga 1">Vaga 1</option>
-                                                            <option value="Vaga 2">Vaga 2</option>
-                                                        </select>
-                                                        <div>
-                                                            <CalendarDays size={17}/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>}
+                                    <div className="flex flex-col w-full mb-4">
+                                        <p className="block text-sm text-gray-700">
+                                            N do documento
+                                        </p>
+                                        <input
+                                            {...register("totalPriceBRL")}
+                                            aria-label="Valor"
+                                            placeholder="0,00"
+                                            type="text" // decimal number
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
+                                            value={watch('totalPriceBRL')}
+                                        />
+                                    
                                     </div>
+                                    <div className="flex flex-col w-full mb-4">
+                                        <p className="block text-sm text-gray-700">
+                                            Data de nascimento
+                                        </p>
+                                        <input
+                                            {...register("totalPriceBRL")}
+                                            aria-label="Valor"
+                                            placeholder="0,00"
+                                            type="text" // decimal number
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
+                                            value={watch('totalPriceBRL')}
+                                        />
+                                    
+                                    </div>
+                                    
+                                    <div className="flex flex-col w-full mb-4">
+                                        <p className="block text-sm text-gray-700">
+                                            Notas
+                                        </p>
+                                        <textarea
+                                            {...register("totalPriceBRL")}
+                                            aria-label="Valor"
+                                            
+                                            // type="" // decimal number
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
+                                            value={watch('totalPriceBRL')}
+                                        />
+                                    
+                                    </div>
+                                    <DisableToggle/>
                                     <div className="flex flex-col w-full mb-4">
                                         <p className="block text-sm text-gray-700">
                                             Preço
@@ -657,41 +577,23 @@ export function NewSale({setShowModal}:Props) {
                                             Moeda
                                         </button> */}
                                     </div>
-                                    {/* <Controller
-                                        name="discount"
-                                        control={control}
-                                        defaultValue=""
-                                        render={({ field }) => (
-                                            <input
-                                                type="text"
-                                                {...field}
-                                                placeholder="%"
-                                                maxLength={3}
-                                                className='w-full outline-none text-sm h-12 border border-zinc-300 rounded pl-5'
-                                                value={`${watch('discount') === undefined ? "" : watch('discount')}`}
-                                                onChange={(e) => {
-                                                    const value = e.target.value.trim(); 
-                                                    const number = extractNumbersAndReturnNumber(value);
-                                                    const text =  number.toString()
-                                                    // field.onChange(text); 
-                                                    setInputDiscount(text)
-                                                    }
-                                                }
-                                            />
-                                        )}
-                                    /> */}
-                                    {/* <div className="w-full outline-none text-sm h-12 border border-zinc-300 rounded  relative flex items-center ">
-                                        <input 
-                                            // {...register("discount")}
-                                            type="text"
-                                            maxLength={4}
-                                            placeholder="%" 
-                                            className='pl-3 w-full h-full '
-                                            defaultValue={''}
-                                            onChange={e => {
-                                            }}
-                                        />
-                                    </div> */}
+
+                                    <div className="w-full text-sm font-medium">
+                                        <div className="w-full flex justify-between">
+                                            <span>Preço</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                        <div className="w-full flex justify-between">
+                                            <span>Desconto</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                        <hr className="my-3"></hr>
+                                        <div className="w-full flex justify-between font-bold">
+                                            <span>Subtotal total</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             )
                         })}
@@ -748,11 +650,38 @@ export function NewSale({setShowModal}:Props) {
                             <span className="font-bold text-sm">R$ 2,596, 00</span>
                         </p>
                         {/* Vai ser input tipo checkbox */}
+
+                        <hr className="my-3"></hr>
+
                         <h4 className='font-bold  mt-10 mb-5 '>
                             Pagamento
                         </h4>
+                        <div className="py-3 pr-3 flex flex-col">
+                            <button className="flex gap-2">
+                                <PlusIcon/>
+                                <span>Cartão de crédito</span>
+                            </button>
+                            <button className="flex gap-2">
+                                <PlusIcon/>
+                                <span>Cartão de débito</span>
+                            </button>
+                            <button className="flex gap-2">
+                                <PlusIcon/>
+                                <span>Pix</span>
+                            </button>
+                          <button className="flex gap-2">
+                                <span>Boleto</span>
+                            </button>
+                           <button className="flex gap-2">
+                                <span>Cheque</span>
+                            </button>
+                           <button className="flex gap-2">
+                                <span>Transferencia</span>
+                            </button>
+
+                        </div>
                     
-                        <Tabs defaultValue="Adiantado" className="max-w-[400px] w-full text-sm">
+                        {/* <Tabs defaultValue="Adiantado" className="max-w-[400px] w-full text-sm">
                             <TabsList>
                                 <TabsTrigger value="Adiantado" >
                                     Adiantado
@@ -773,7 +702,9 @@ export function NewSale({setShowModal}:Props) {
                             <TabsContent value="custom">
                                 Total: R$ 265,00
                             </TabsContent>
-                        </Tabs>
+                        </Tabs> */}
+
+                        
                         {/* <div className='gap-2 h-min mt-10 mb-5'>
                             <span className='mb-2'>
                                 <label className='text-sm mb-4 text-gray-700'>Colaborador/Funcionário</label>
@@ -791,16 +722,8 @@ export function NewSale({setShowModal}:Props) {
                                 </select>
                             </div>
                         </div> */}
-                        <div className="flex flex-col gap-3 p-3 my-6 text-gray-700 text-sm">
-                            <div className="flex gap-3">
-                                <div className="">
-                                    <input 
-                                        type="checkbox" 
-                                        className="" 
-                                    />
-                                </div>
-                                Enviar Ordem de Serviço
-                            </div>
+                        <hr className="my-3"></hr>
+                        <div className="flex flex-col gap-3 py-3 my-6 text-gray-700 text-sm">
                             <div className="flex gap-3">
                                 <div className="">
                                     <input type="checkbox" />
@@ -814,16 +737,20 @@ export function NewSale({setShowModal}:Props) {
                                 Enviar Nota Fiscal
                             </div>
                         </div>
-                        <div className="flex gap-3 justify-end my-4 ">
-                            <div className="w-full flex justify-between text-xs">
-                                <button className="border border-zinc-300 rounded font-semibold whitespace-nowrap h-10 w-min px-3 flex gap-2 items-center">
-                                    <ChevronLeft size={18} />
-                                    Anterior
-                                </button>
-                                <button className="border border-zinc-300 rounded font-semibold whitespace-nowrap h-10 w-min px-3 flex gap-2 items-center">
-                                    Próximo
-                                    <ChevronRight size={18} />
-                                </button>
+                         <hr className="my-3"></hr>
+                       <div className="w-full text-sm font-medium">
+                            <div className="w-full flex justify-between">
+                                <span>Preço</span>
+                                <span>R$ 235,23</span>
+                            </div>
+                            <div className="w-full flex justify-between">
+                                <span>Desconto</span>
+                                <span>R$ 235,23</span>
+                            </div>
+                            <hr className="my-3"></hr>
+                            <div className="w-full flex justify-between font-bold">
+                                <span>Total total</span>
+                                <span>R$ 235,23</span>
                             </div>
                         </div>
                     </div>
@@ -842,7 +769,7 @@ export function NewSale({setShowModal}:Props) {
                     </div>
                 </form>
             </div>
-        </div>
+        </>
     )
 }
 
@@ -867,3 +794,33 @@ export function SearchModal ({closeModal}: {closeModal: () => void}) {
 
 
 
+export function DisableToggle() {
+ const [enabled, setEnabled] = useState(false);
+
+
+    return (
+        <div className="flex flex-col gap-4">
+            <span className=" text-sm font-medium text-gray-900">Pessoa com deficiência</span>
+            <label className="flex items-center cursor-pointer justify-between w-full">
+                <span className=" text-sm text-gray-900">
+                    {enabled ? 'Sim' : 'Não'}
+                </span>
+                <div className="relative">
+                    <input
+                        type="checkbox"
+                        checked={enabled}
+                        onChange={() => setEnabled(!enabled)}
+                        className="sr-only"
+                    />
+                    <div className={`w-11 h-6 rounded-full transition-colors duration-300 ${enabled ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+                    <div
+                        className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                        enabled ? 'translate-x-5' : ''
+                        }`}
+                    ></div>
+                </div>
+               
+            </label>
+        </div>
+    )
+}

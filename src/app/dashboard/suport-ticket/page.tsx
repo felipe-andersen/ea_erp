@@ -49,7 +49,8 @@ export default function SupportTicketsView() {
     tickets.filter((t) => t.status === status);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 ">
+    <div className="w-full h-full overflow-y-scroll px-4 ">
+        <div className='h-auto w-full h-full'>
       <h1 className="text-2xl font-semibold">Tickets de Suporte</h1>
 
       <Tabs defaultValue="open" className="w-full">
@@ -71,6 +72,7 @@ export default function SupportTicketsView() {
           <TicketList tickets={filterByStatus('closed')} />
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 }

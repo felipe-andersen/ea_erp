@@ -1,4 +1,4 @@
-import { Worker } from "./main";
+import { Worker } from "./content.view.";
 
 export let worker: Worker[] = [
     {

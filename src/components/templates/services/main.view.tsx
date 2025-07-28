@@ -192,19 +192,19 @@ export function Main() {
 
    
     return (
-    <main className='  bg-neutral-100 h-full overflow-y-scroll w-full'>
+    <main className='bg-neutral-100 h-full overflow-y-scroll w-full p-4'>
         <CategoryModal
             onClose={setIsModalOpen}
             isOpen={isModalOpen}
         />
-        <div className='w-full h-min   sm:p-8 flex flex-col '>
+        <div className='w-full h-auto w-full sm:p-8 flex flex-col bg-white'>
             <div className='flex justify-between '>
                 <div className='flex flex-col mb-10 gap-3'>
                     <h2 className='text-md font-bold text-xl'>
-                        Serviços
+                        Produtos
                     </h2>
                     <p className='text-neutral-600 text-sm'>
-                        1 categoria 3 serviços cadastrados
+                        1 categoria 3 items cadastrados
                     </p>
                 </div>
                 <button 
@@ -263,9 +263,9 @@ export function Main() {
                     </h2>
                     <div className='flex gap-3'>
                         <button
-                            onClick={() => router.push('services/new')} 
+                            onClick={() => router.push('products/new')} 
                             className='h-10 w-min px-3 whitespace-nowrap  text- text-sm rounded-xl bg-blue-100 font-medium '>
-                            Cadastrar serviço 
+                            Cadastrar 
                         </button>
                         <div className='flex -mr-2'>
                             <div className='h-9 w-9 rounded  hover:bg-zinc-100 flex items-center justify-center '>

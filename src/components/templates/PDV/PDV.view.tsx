@@ -24,9 +24,13 @@ async function addFriend(props:Props) {
 
 export function PDV() {
     return (
-        <div className="">
-            <Header pageName="PDV"/>
-            <Main/>
+        <div className="flex flex-col w-full items-center bg-gray-400">
+            <Header pageName="Vender"/>
+            <div className="flex h-[calc(100vh-48px)] w-full">
+                <div className="flex justify-center w-full max-w-[1350px] h-full">
+                    <Main/>
+                </div>
+            </div>
         </div>
     )
 }

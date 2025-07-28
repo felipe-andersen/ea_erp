@@ -8,56 +8,55 @@ import SideBar from '@/components/organisms/side-bar/side-bar.view';
 import logger from '@/lib/pino';
 import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
 import innerWidth from '@/hooks/useIsMobile';
+import FloatingMessageButton from '@/components/organisms/FloatingMessageButton/FloatingMessageButton.view';
+import { useEffect } from 'react';
+import Script from 'next/script';
 
 
-const moduleFileName = `templates/dashboard/dashboard.view.tsx`
+const moduleFileName = `templates/dashboard/dashboard.view.tsx`;
 
-const loggerMsg = `> ${moduleFileName}`
+const loggerMsg = `> ${moduleFileName}`;
 
 export default function Dashboard() {
     const [show, setShow] = useState(false);
     const [isSidebarExtended, setSidebarExtended] = useState(false);
-    // 
+    
     const target = useRef(null);
-    logger.info(loggerMsg)
 
+    logger.info(loggerMsg);
 
-    const Width = innerWidth()
+    // const Width = innerWidth();
+
     return (
         <div
             data-testid={'126g65d'}
-            className='relative flex h-screen w-screen box-border  bg-zinc-300 overflow-hidden'
+            className='relative flex w-full h-full box-border  bg-zinc-300 overflow-hidden '
         >
             <Header pageName='Home' />
-            <div className={`w-full h-[calc(100%-88px)] md:h-[calc(100%-56px)] flex top-12 fixed overflow-hidden z-[1006]`}>
-                {/* <span data-testId={'fdfadf'} role="region"  id='fdfadf'>Click Me</span> */}
-                {
-                    Width <= 768 ?
-                        <></>
-                        :
-                        <div className={`flex flex-col h-full bg-red-0 relative border-r transition-all`}>
-                            <div className='overflow-hidden w-full h-full bg-blue-300 transition-all'>
-                                <SideBar isVisibleTitle={isSidebarExtended} />
-                                {/* <SideBar {isFixed={isSidebarExtended ? true : false}} /> */}
-                            </div>
-                            <div className='flex items-center justify-center border w-7 h-7 rounded-full absolute mt-4 ml-[calc(100%-10px)] z-20 bg-white'>
-                                {
-                                    !isSidebarExtended ?
-                                        <button className="w-full h-full flex items-center justify-center" onClick={() => setSidebarExtended(true)}>
-                                            <ArrowRightFromLine size={14} />
-                                        </button>
-                                        :
-                                        <button className="w-full h-full flex items-center justify-center" onClick={() => setSidebarExtended(false)}>
-                                            <ArrowLeftToLine size={14} />
-                                        </button>
-                                }
-                            </div>
-                        </div>
-                }
-                <Main />
-                <aside></aside>
+            <FloatingMessageButton />
+            <div className={`w-full h-[calc(100%-88px)] md:h-[calc(100%-56px)] flex sm:top-14 fixed overflow-hidden z-[1006]`}>
+                <SideBar isVisibleTitle={isSidebarExtended} />
+                {/*<Main /> */}
             </div>
-            {Width <= 768 ? <BottomNavigation /> : <></>}
+            <VLibras/>
+            {/* {Width <= 768 ? <BottomNavigation /> : <></>} */}
         </div>
-    );
+    )
+}
+
+export  function VLibras() {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).VLibras) {
+      new (window as any).VLibras.Widget('https://vlibras.gov.br/app');
+    }
+  }, []);
+
+  return (
+    <>
+      <Script
+        src="https://vlibras.gov.br/app/vlibras-plugin.js"
+        strategy="afterInteractive"
+      />
+    </>
+  );
 }

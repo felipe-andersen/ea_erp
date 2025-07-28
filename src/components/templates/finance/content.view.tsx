@@ -34,7 +34,7 @@ const Content =  function () {
   const balance = totalIncome - totalExpense;
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
+    <div className=" bg- p-10 ">
       <h1 className="text-2xl font-semibold">Financeiro</h1>
 
       {/* Resumo */}
@@ -74,11 +74,11 @@ const Content =  function () {
       </div>
 
       {/* Tabela de Transações */}
-      <div className="overflow-x-auto border rounded-lg">
+      <div className="overflow-x-auto border rounded-lg bg-white">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-100 text-left">
+          <thead className="bg-gray-100 text-left ">
             <tr>
-              <th className="p-3">Data</th>
+              <th className="p-3 font-semibold">Data</th>
               <th className="p-3">Descrição</th>
               <th className="p-3">Tipo</th>
               <th className="p-3">Valor</th>
@@ -110,7 +110,7 @@ const Content =  function () {
         </table>
       </div>
     </div>
-  );
-}
+  )
+};
 
 export default Content;

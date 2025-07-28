@@ -1,10 +1,10 @@
-import Settings from "@/components/templates/settings";
+import Account from "@/components/templates/account/account.view";
 
 
 export default function AccountPage() {
     return (
         <>
-            <Settings/>
+            <Account/>
         </>
     )
 }

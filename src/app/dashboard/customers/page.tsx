@@ -1,7 +1,8 @@
+import Customers from "@/components/templates/customers/customers.view";
+
+
 export default function CustomersPage() {
     return (
-        <div>
-            fdf
-        </div>
+       <Customers />
     )
 }

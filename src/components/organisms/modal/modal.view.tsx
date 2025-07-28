@@ -6,9 +6,10 @@ type ModalType = {
     isOpen: boolean;
     onClose: Dispatch<SetStateAction<boolean>>;
     children: React.ReactNode;
+    closeOnOutsideClick?: boolean
 };
 
-export function Modal({isOpen, onClose, children}: ModalType)  {
+export function Modal({isOpen, onClose, children, closeOnOutsideClick}: ModalType)  {
     const [categoryName, setCategoryName] = useState("");
 
     const isDisabled = categoryName.trim() === "";
@@ -36,7 +37,7 @@ export function Modal({isOpen, onClose, children}: ModalType)  {
 
     return (
         <div
-            onClick={() => onClose(!isOpen)}
+            onClick={() => closeOnOutsideClick === true ? onClose(!isOpen) : () => {}}
             className="fixed z-[1030] top-0 bottom-0 right-0 left-0 flex items-center justify-center bg-black bg-opacity-30 "
             aria-labelledby="modal-title"
             role="dialog"

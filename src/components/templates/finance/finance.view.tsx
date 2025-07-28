@@ -21,4 +21,4 @@ export function Finance() {
     )
 }
 
-export default Marketing
+export default Finance
