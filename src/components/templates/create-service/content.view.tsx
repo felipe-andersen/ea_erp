@@ -78,7 +78,7 @@ export default function Content() {
         <div className="flex flex-col w-full p-4 overflow-y-scroll">
             <div className="bg-white p-10  max-w-[600px] h-auto">
                 <h1 className="text-xl font-bold">Experiência</h1>
-                <p>Atualize os dados da experiência</p>
+                <p className='text-sm'>Atualize os dados da experiência</p>
                 <div className="bg-neutral-0 py-5">
                     <div className='flex flex flex-col text-sm gap-1'>
                         {/* <div className="text-sm font-semibold text-gray-700">id</div>
@@ -96,13 +96,13 @@ export default function Content() {
                             <span className="text-red-600">*</span> 
                             Título
                         </label>
-                        <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                        <div className="h-12 w-full border border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                             <input
                                 data-test="full-name"
                                 className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                 // name="fullName" 
                                 spellCheck="false"
-                                placeholder={"Ricardo Albuquerque"}
+                                placeholder={"Título"}
                                 type="text"
                                 {...register("title", { pattern: /^[A-Za-z]+$/i })}
                                 // aria-invalid={errors.name ? "true" : "false"}
@@ -124,17 +124,17 @@ export default function Content() {
                             <span className="text-red-600">*</span> 
                             Descrição
                         </label>
-                        <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                        <div className="h-12 w-full border border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                             <input
                                 data-test="full-name"
                                 className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                 // name="fullName" 
                                 spellCheck="false"
-                                placeholder={"Ricardo Albuquerque"}
+                                placeholder={"Descrição"}
                                 type="text"
                                 {...register("description", { pattern: /^[A-Za-z]+$/i })}
                                 aria-invalid={errors.id ? "true" : "false"}
-                                value={capitalizeWords(watch('description'))}
+                                value={watch('description')}
                             />
                             <span className="h-10 hidden w-10 scale-90 flex items-center justify-center ">
                                 <span className="loader" />
@@ -147,14 +147,14 @@ export default function Content() {
                             <span className="text-red-600">*</span> 
                             Bilhetes disponíveis
                         </label>
-                        <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                        <div className="h-12 w-full border border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                             <input
                                 data-test="full-name"
                                 className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                 // name="fullName" 
                                 spellCheck="false"
-                                placeholder={"Ricardo Albuquerque"}
-                                type="text"
+                                placeholder={"Bilhetes disponíveis"}
+                                type="number"
                                 // {...register("name", { pattern: /^[A-Za-z]+$/i })}
                                 // aria-invalid={errors.name ? "true" : "false"}
                                 // value={capitalizeWords(watch('name'))}
@@ -170,15 +170,16 @@ export default function Content() {
                             <span className="text-red-600">*</span> 
                             Mínimo por usuário
                         </label>
-                        <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                        <div className="h-12 w-full border border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                             <input
                                 data-test="full-name"
                                 className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                 // name="fullName" 
                                 spellCheck="false"
-                                placeholder={"Ricardo Albuquerque"}
-                                type="text"
-                                {...register("minPerUser", { pattern: /^[A-Za-z]+$/i })}
+                                placeholder={"Mínimo por usuário"}
+                                min={0}
+                                type="number"
+                                {...register("minPerUser",  { pattern: /^[A-Za-z]+$/i})}
                                 aria-invalid={errors.minPerUser ? "true" : "false"}
                                 value={watch('minPerUser')}
                             />
@@ -198,14 +199,14 @@ export default function Content() {
                             <span className="text-red-600">*</span> 
                             Máximo por usuário
                         </label>
-                        <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                        <div className="h-12 w-full border border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                             <input
                                 data-test="full-name"
                                 className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                 // name="fullName" 
                                 spellCheck="false"
-                                placeholder={"Ricardo Albuquerque"}
-                                type="text"
+                                placeholder={"Máximo por usuário"}
+                                type="number"
                                 {...register("maxPerUser", { pattern: /^[A-Za-z]+$/i })}
                                 aria-invalid={errors.maxPerUser ? "true" : "false"}
                                 value={watch('maxPerUser')}
@@ -222,7 +223,7 @@ export default function Content() {
                         }
                     </div>
                     <div className={`flex flex-col`}>
-                        <label className="">Status</label>
+                        <label className="text-sm font-medium text-gray-700">Status</label>
                         <DisableToggle/>
                     </div>
                     <div className='gap-1 h-min mb-4 flex flex-col'>
@@ -230,21 +231,21 @@ export default function Content() {
                             <span className="text-red-600">*</span> 
                             Notas
                         </label>
-                        <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
-                            <input
+                        <div className="h-20 w-full border h-min border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                            <textarea
                                 data-test="full-name"
-                                className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
+                                className="text-sm w-full  h-20 px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                 // name="fullName" 
                                 spellCheck="false"
-                                placeholder={"Ricardo Albuquerque"}
-                                type="text"
+                                
+                                // type="text"
                                 {...register("notes", { pattern: /^[A-Za-z]+$/i })}
                                 aria-invalid={errors.notes ? "true" : "false"}
                                 value={watch('notes')}
                             />
-                            <span className="h-10 hidden w-10 scale-90 flex items-center justify-center ">
+                            {/* <span className="h-10 hidden w-10 scale-90 flex items-center justify-center ">
                                 <span className="loader" />
-                            </span>
+                            </span> */}
                         </div>
                     </div>
                 </div>
@@ -505,13 +506,13 @@ export default function Content() {
 
 
 export function DisableToggle() {
- const [enabled, setEnabled] = useState(false);
+ const [enabled, setEnabled] = useState(true);
 
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4 py-3">
             <label className="flex items-center cursor-pointer justify-between w-full">
-                <span className="ml-3 text-sm font-medium text-gray-900">
+                <span className="text-sm text-gray-900">
                     {enabled ? 'Habilitado' : 'Desabilitado'}
                 </span>
                 <div className="relative">

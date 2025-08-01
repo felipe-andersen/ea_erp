@@ -1,9 +1,80 @@
 'use client'
-import { duration } from 'moment';
 import { z } from 'zod';
-// para salvar localmente
+import { cpf } from 'cpf-cnpj-validator'; 
 
-// RxDB schema
+
+type NFSEType = {
+    data_emissao:Date
+    serie_dps: number
+    numero_dps: string 
+    emitente_dps: string 
+    data_competencia: string
+    codigo_municipio_emissora: string
+    cnpj_prestador: string
+    cpf_prestador: string //?
+    nif_prestador: string
+    codigo_opcao_simples_nacional: string // !
+    regime_especial_tributacao: string // !
+    cpf_tomador: string 
+    nif_tomador: string // = ""
+    motivo_ausencia_nif_tomador: string // =  1
+    codigo_municipio_prestacao: string
+    codigo_tributacao_nacional_iss: string // !
+    descricao_servico: string
+    valor_servico: string
+    tributacao_iss: string // !
+    telefone_tomador: string 
+    email_tomador: string 
+}
+
+
+const nfs_e = z.object({
+    data_emissao: z.date(), // (Universal Coordinated Time): AAAA-MM-DDThh:mm:ssTZD.
+    serie_dps: z
+        .string()
+        .min(5)
+        .max(5),
+    numero_dps: z
+        .string()
+        .min(15)
+        .max(15),
+    emitente_dps: z 
+        .number()
+        .int()
+        .min(1)
+        .max(3), 
+    data_competencia: z.date(), // (AAAA-MM-DD).
+    codigo_municipio_emissora: z.number().default(3300100),
+    cnpj_prestador:  z 
+        .number()
+        .int()
+        .min(14)
+        .max(14), 
+    // cpf_prestador: z.string(), //?
+    nif_prestador: z.string().default(""),
+    codigo_opcao_simples_nacional: z.string(), // !
+    regime_especial_tributacao: z.string(), // !
+    cpf_tomador: z.string(), 
+    nif_tomador: z.string().min(1).max(40).default(''),  // = ""
+    motivo_ausencia_nif_tomador: z 
+        .number()
+        .int()
+        .min(1)
+        .max(3),  // =  1
+    codigo_municipio_prestacao: z 
+        .number()
+        .int()
+        .min(1)
+        .max(3)
+        .default(3300100),
+    codigo_tributacao_nacional_iss: z.string(), // !
+    descricao_servico: z.string().min(1).max(1000),
+    valor_servico: z.string()
+        .regex(/^\d{1,13}(\.\d{1,2})?$/)
+        .transform((val) => parseFloat(val)),
+    tributacao_iss: z.string(), // !
+})
+
 export const customerData = {
     version: 1,
     primaryKey: 'id',
@@ -76,32 +147,7 @@ const serviceSchema = z.object({
     //     }),
     // }),
     // serviceDuration: z.string(),
-    scheduledDate:z.union([
-        z.coerce.date(),
-        z.undefined()
-    ]),          
-    scheduledTime: z.union([
-        z.string()
-            .time()
-            .max(6)
-            .min(5), 
-        z.undefined()
-    ]),          
-    deliveryDate: z.union([
-        z.coerce.date(),
-        z.undefined()
-    ]),          
-    deliveryTime:z.union([
-        z.string()
-            .time()
-            .max(6)
-            .min(5), 
-        z.undefined()
-    ]),          
-    catergory: z.union([
-        z.string(), 
-        z.undefined()
-    ]),      
+    
     // vehicleArrivalDateTime: z.object({
     //     date: z.string(),                
     //     time: z.string(),              
@@ -127,12 +173,19 @@ const totalPriceBRL = z
             currency: "BRL",
         });
     })
+
+export const cpfSchema = z
+  .string()
+  .transform((val) => val.replace(/\D/g, '').slice(0, 11)) // limpa e limita a 11 dígitos
+  .refine((val) => val.length === 11, {
+    message: 'CPF must have exactly 11 digits',
+  })
     
 export const newSaleSchema = z.object({
     name: z
         .string()
-        .min(1, 'Minimum 1 characte')
-        .max(100, 'Maximum 100 characters'),                
+        .min(11, '1')
+        .max(100),                
     phone: z
         .string()
         .min(13, 'min 8')
@@ -144,6 +197,8 @@ export const newSaleSchema = z.object({
         .min(1, "min 1")
         .max(100, "max: 100")
         .optional(),
+    CPF: cpfSchema,
+
     // date: z.coerce
     //     .date()
     //     .min(new Date("1900-01-01"), { message: "Too old"})
@@ -196,7 +251,8 @@ export const newSaleSchema = z.object({
         .array(serviceSchema)
         .optional(),
     // dateTime: z.instanceof(Date),                   
-    employee: z.string(),                           
+    employee: z.string(),     
+    experience: z.string().min(1),
     // serviceDuration: z.string(),
     // scheduledDate: z.coerce.date(),
     // scheduledTime:  z
@@ -249,6 +305,8 @@ export const newSaleSchema = z.object({
     }),
 });
 
+
+
 const vehicle = {
     id: "v00123", // Identificador do veículo
     make: "Toyota", // Marca do veículo
@@ -276,6 +334,16 @@ const sale = {
     responsibleEmployee: "Jonh",
     customerStatus: "notRegistered",
 };
+
+const ticketSchema = z.object({
+    publicId: z.string().min(1),
+    fullName: z.string().min(1),
+    phone: z.string().min(1),
+    email:z.string().email().max(100),
+    documentType: z.string().min(1),
+    documentNumber: z.string().min(1),
+    birthDate: z.date(),
+})
 
 const saleDiscount = {
     saleId: '566565',

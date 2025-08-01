@@ -1,8 +1,8 @@
-# version: "3.8"
-
 networks:
-  embarque_angra_erp_net:
-    driver: bridge
+  # embarque_angra_erp_net:
+  #   driver: bridge
+  observability-net:
+    external: true
 
 services:
   embarque_angra_erp_ui:
@@ -14,17 +14,36 @@ services:
       - 3040:3000
     restart: always
     networks:
-      - embarque_angra_erp_net
-    environment:
-      - PASS=123456
+      # - embarque_angra_erp_net
+      - observability-net
 
-  jenkins:
-    image: jenkins/jenkins:lts
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
     ports:
-      - "8080:8080"
+      - "8081:16686"
+      - "14268"
+      - "14250"
+
+    networks:
+      # - embarque_angra_erp_net
+      - observability-net
+
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector-config.yml"]
     volumes:
-      - jenkins_home:/var/jenkins_home
-  # ssh-agent:
-  #   image: jenkins/ssh-agent
-volumes:
-  jenkins_home:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    ports:
+      - "1888:1888" # pprof extension
+      - "13133:13133" # health_check extension
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # http gRPC receiver
+      - "55679:55679" # zpages extension
+    depends_on:
+      - jaeger
+
+    networks:
+      # - embarque_angra_erp_net
+      - observability-net

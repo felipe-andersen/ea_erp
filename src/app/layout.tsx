@@ -1,6 +1,8 @@
+import { initalizeTracing } from './tracing'
+initalizeTracing()
 import type { Metadata } from "next";
 import {Aleo, Archivo, Quicksand, Lexend } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import Head from "next/head";
 import Script from "next/script";
 

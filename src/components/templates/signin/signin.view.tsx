@@ -22,7 +22,7 @@ export default function Signin() {
 
     }
     return (
-        <div className="bg-teal-500 dffd h-screen w-full  fixed flex flex-col items-center py-10 overflow-y-scroll">
+        <div className="bg-gray-200 dffd h-screen w-full  fixed flex flex-col items-center py-10 overflow-y-scroll">
             <div className="max-w-[390px] w-full bg-white h-min flex flex-col items-center rounded">
                 <Tabs defaultValue="account" className="w-full">
                     <TabsList className="grid w-full grid-cols-2">
@@ -153,7 +153,7 @@ export function SigninLogin({setView}: {setView: React.Dispatch<SetStateAction<s
         
             <div className="max-w-[390px] w-full bg-white py-16 px-5 flex flex-col items-center rounded">
                 <h1 className="text-center text-2xl font-medium mb-4">
-                    Bem vindo a Esteticar!
+                    Embarque Angra ERP! 
                 </h1>
                 <p className="text-center max-w-80 mb-6">
                     Entre com sua conta
@@ -182,7 +182,7 @@ export function SigninLogin({setView}: {setView: React.Dispatch<SetStateAction<s
                     <li>- ter letras maiúsculas, letras minúsculas e números;</li>
                     <li>- não pode ter caracteres especiais como <span className="px-1 bg-blue-100 rounded">#$%@&*-+.,</span>.</li>
                 </ol> */}
-                <button className="h-10 w-full bg-teal-500  text-lg rounded text-white font-medium mb-6 max-w-[390px]">
+                <button className="h-10 w-full bg-blue-600  text-lg rounded text-white font-medium mb-6 max-w-[390px]">
                     Começar
                 </button>
                 <span className="text-sm my-3 mb-5">ou entre com</span>
@@ -219,26 +219,10 @@ export function SigninLogin({setView}: {setView: React.Dispatch<SetStateAction<s
                 </div>
                 <div className="flex items-center text-center gap-2 mb-6 -text-[#4d6992]">
                     Não tem uma conta?
-                    <Link href={"/signup"} className=" text-black h-8 flex px-3 bg-zinc-100 rounded items-center text-xs font-medium">
-                        Cadastrar
+                    <Link href={"/"} className=" text-black h-8 flex px-3 bg-zinc-100 rounded items-center text-xs font-medium">
+                        Contate
                     </Link>
                 </div>
-                <p className="text-sm -text-[#4d6992] leading-6 max-w-[360px] text-center">
-                    Ao se inscrever, você reconhece que concorda com nossos
-                    &nbsp;
-                    <Link 
-                        href="/terms" 
-                        className="underline"
-                    >
-                        Termos de Serviço
-                    </Link> e &nbsp;
-                    <Link 
-                        href="/terms" 
-                        className="underline"
-                    >
-                        Política de Privacidade
-                    </Link> .
-                </p>
             </div>
   
     )

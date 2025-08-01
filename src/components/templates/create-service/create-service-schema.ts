@@ -11,7 +11,14 @@ export const PricesSchema = z.object({
 
 export const DateAndTimeSchema = z.object({
     timeZone: z.string(),
-    availabilityDate: z.string(), 
+    availabilityDate: z.preprocess((val) => {
+        if (typeof val === 'string' || val instanceof Date) {
+        const parsed = new Date(val);
+        return isNaN(parsed.getTime()) ? undefined : parsed;
+        }
+        return undefined;
+    }, z.date())
+    .transform((date) => Math.floor(date.getTime() / 1000)),
     timeStart: z.string().optional(),         
     timeEnd: z.string().optional(),             
     // totalTickets?: number
@@ -36,11 +43,11 @@ export const CreateExperienceSchema = z.object({
     notes: z.string(),                
     prices: z.array(PricesSchema),   
     daysAndTimes: z.array(DateAndTimeSchema),   
-    availableTickets:  z.number(),     
-    soldTickets: z.number(),     
-    remainingTickets:  z.number(),     
-    minPerUser: z.number(),     
-    maxPerUser:  z.number(),     
+    availableTickets: z.string().transform((val) => Number(val)),     
+    soldTickets: z.string().transform((val) => Number(val)),     
+    remainingTickets:  z.string().transform((val) => Number(val)),     
+    minPerUser: z.string().transform((val) => Number(val)),
+    maxPerUser:  z.string().transform((val) => Number(val)),   
     disabled: z.boolean()     
 });
 

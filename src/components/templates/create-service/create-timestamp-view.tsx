@@ -14,6 +14,7 @@ import CreatePriceFormTest from './cptest.view';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
+import { TimeZoneEnum } from './create-timestamp-model';
 
 type Experience = {
     id: string
@@ -35,10 +36,10 @@ type Experience = {
 };
 
 const newDateAndTime = {
-    timeZone: '',
-    availabilityDate: '',
-    timeStart: '',      
-    timeEnd: '',
+    timeZone: 'UTC (UTC+00:00)',
+    availabilityDate: Math.floor(new Date().getHours() / 100),
+    timeStart: '00:00',      
+    timeEnd: '00:00',
 };
 
 const DateAndTimeFormSchema = z.object({
@@ -54,24 +55,26 @@ enum LabelsEnum {
     AVAILABILITYDATE = 'availabilityDate',
     TIMESTART = 'timeStart',
     TIMEEND = 'timeEnd'
-}
+};
 
 const inputLabel = {
     [LabelsEnum.AVAILABILITYDATE] : "Date",
     [LabelsEnum.TIMESTART] : "Start Time",
     [LabelsEnum.TIMEEND] : "End Time",
     [LabelsEnum.TIMEZONE] : "Time Zone"
-}
+};
 
 function getInputLabel (label: LabelsEnum) {
     return inputLabel[label]
-}
+};
 
 function isLabelsEnum(value: string): value is LabelsEnum {
   return Object.values(LabelsEnum).includes(value as LabelsEnum);
-}
+};
 
 export default function CreateDateAndTimeForm() {
+
+    const [ dateAndTimeValues ] = useState<DateAndTimeType[]>([]);
 
     const {
         register,
@@ -84,9 +87,7 @@ export default function CreateDateAndTimeForm() {
              mode: 'onChange', 
             resolver: zodResolver(DateAndTimeFormSchema),
             defaultValues: {
-                dateAndTime: [
-                   
-                ]
+                dateAndTime: dateAndTimeValues
             }
         });
 
@@ -102,18 +103,17 @@ export default function CreateDateAndTimeForm() {
         e.preventDefault()
     };
 
-
     function getInputType(key: string): 'time' | 'date' | 'text' {
-  switch (key) {
-    case 'timeStart':
-    case 'timeEnd':
-      return 'time';
-    case 'availabilityDate':
-      return 'date';
-    default:
-      return 'text'; // para timeZone e outros
-  }
-}
+        switch (key) {
+            case 'timeStart':
+            case 'timeEnd':
+                return 'time';
+            case 'availabilityDate':
+                return 'date';
+            default:
+                return 'text';
+        }
+    };
 
     return (
         <div className="flex flex-col w-full bg-red-0">
@@ -146,31 +146,44 @@ export default function CreateDateAndTimeForm() {
 
                                                 const labelEnumKey = fieldKey
                                                 const label = isLabelsEnum(labelEnumKey) ? getInputLabel(labelEnumKey) : fieldKey;
-                                              
+                                                const field = fieldName.split('.').at(-1);
                                                 return (
                                                     <>
                                                         <div key={fieldKey} className='gap-1 h-min mb-4 flex flex-col'>
                                                             <label className="text-sm font-medium text-gray-700">
-                                                                <span className="text-red-600">*</span> 
+                                                                {
+                                                                    field === 'availabilityDate' ?
+                                                                        <span className="text-red-600">*</span>  :
+                                                                        <></>
+                                                                }
                                                                 {label}
                                                             </label>
-                                                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
-                                                                <input
-                                                                    data-test="full-name"
-                                                                    className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
-                                                                    // name="fullName" 
-                                                                    spellCheck="false"
-                                                                    // placeholder={"Ricardo Albuquerque"}
-                                                                    {...register(fieldName, { pattern: /^[A-Za-z]+$/i })}
-                                                                    type={getInputType(fieldKey)}
-                                                // aria-invalid={errors.name ? "true" : "false"}
-                                                // value={watch(`prices.${index}.defaultPrice`)}
-                                                                    
-                                                                />
+                                                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400">
+                                                                {
+                                                                    field === 'timeZone' ? <SelectInput/>
+                                                               
+                                                                :
+                                                                    <input
+                                                                        data-test="full-name"
+                                                                        className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
+                                                                        // name="fullName" 
+                                                                        spellCheck="false"
+                                                                        // placeholder={"Ricardo Albuquerque"}
+                                                                        {...register(fieldName, { pattern: /^[A-Za-z]+$/i })}
+                                                                        type={getInputType(fieldKey)}
+                                                                        // aria-invalid={errors.name ? "true" : "false"}
+                                                                        // value={watch(`prices.${index}.defaultPrice`)}
+                                                                        
+                                                                    />
+                                                                }
+                                                                
                                                                 <span className="h-10 hidden w-10 scale-90 flex items-center justify-center ">
                                                                     <span className="loader" />
                                                                 </span>
                                                             </div>
+                                                            <div>
+                                                                {validationMessage(keyTyped, DateAndTimeField)}
+                                                            </div> 
                                                         </div>
                                                     </>
                                                 )
@@ -187,3 +200,78 @@ export default function CreateDateAndTimeForm() {
         </div>
     )
 }
+
+
+
+
+
+
+export const validationMessage = function (
+  field: keyof DateAndTimeType,
+  dataEndTime: DateAndTimeType
+) {
+  const validation = DateAndTimeSchema.safeParse(dataEndTime);
+
+  if (!validation.success) {
+    const errors = validation.error.formErrors.fieldErrors;
+
+    switch (field) {
+      case "availabilityDate":
+        if (errors.availabilityDate?.length) {
+          return <div>{errors.availabilityDate[0]}</div>;
+        }
+        break;
+
+      case "timeZone":
+        if (errors.timeZone?.length) {
+          return <div>{errors.timeZone[0]}</div>;
+        }
+        break;
+
+      case "timeStart":
+        if (errors.timeStart?.length) {
+          return <div>{errors.timeStart[0]}</div>;
+        }
+        break;
+
+      case "timeEnd":
+        if (errors.timeEnd?.length) {
+          return <div>{errors.timeEnd[0]}</div>;
+        }
+        break
+    }
+  }
+
+  return null
+};
+
+const SelectInput = function () {
+    return ( 
+       <select className='w-full h-full bg-transparent px-3 mr-3 outline-none'>
+            {
+                Object.entries(TimeZoneEnum).map(([key, value]) => (
+                    <option key={key} value={value}>{value}</option>
+                ))
+            }
+        </select>
+    )
+}
+
+function unixTimestampToHour(timestamp: number): string {
+  const date = new Date(timestamp * 1000); // converte para milissegundos
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
+
+export function timeToUnixTimestamp(time: string, baseDate = new Date()): number {
+  const [hours, minutes] = time.split(":").map(Number);
+  const date = new Date(baseDate);
+  date.setHours(hours, minutes, 0, 0);
+  return Math.floor(date.getTime() / 1000);
+}
+
+const time = "16:40";
+const timestamp = timeToUnixTimestamp(time);
+console.log(timestamp);

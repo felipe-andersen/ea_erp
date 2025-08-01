@@ -1,6 +1,7 @@
-import { resolve } from 'path'
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vitest/config'
+import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vitest/config';
+
 
 export default defineConfig({
 	plugins: [react()],
@@ -17,17 +18,14 @@ export default defineConfig({
 		coverage: {
 			reporter: ['text', 'json', 'html'],
 			all: true,
-			include: ['src/**'],
+			include: ['**/*.{test,spec}.{ts,tsx}'],
 			exclude: [
 				'node_modules',
-				'tests',
-				'src/tests',
 				'**/*.type.ts',
 				'**/*.stories.tsx',
 				'**/*page.tsx',
-				'src/app/exempla.tsx',
-			],
+			]
 		},
-		setupFiles: './vitest.setup.mts',
-	},
+		setupFiles: './vitest.setup.mts'
+	}
 })

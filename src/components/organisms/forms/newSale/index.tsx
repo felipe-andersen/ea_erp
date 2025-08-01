@@ -1,11 +1,12 @@
 'use client'
+import './new-sale.css'
 import { ArrowLeft, CalendarDays, ChevronLeft, ChevronRight, Minus, Plus, PlusIcon, Search, SidebarCloseIcon, UserRound, Watch, X } from "lucide-react";
 import { useForm, SubmitHandler, UseFormSetValue, Controller, useFieldArray } from "react-hook-form"
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { capitalizeWords } from "@/shared/capitalizeWords";
 import React, { FormEvent, useEffect, useMemo, useState } from "react";
-import { discountTypeSchema, newSaleSchema } from "./new-sale-schema";
+import { cpfSchema, discountTypeSchema, newSaleSchema } from "./new-sale-schema";
 import { extractNumbers } from "@/shared/extractNumbers";
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -71,6 +72,8 @@ export function NewSale({setShowModal}:Props) {
     const [selectedValue, setSelectedValue] = useState("");
     const [doNotSchedule, setDoNotSchedule] = useState<boolean>(false);
     const [modalVisible, setModalVisible] = useState<boolean>(false)
+    const [cpf, setCpf]  = useState('');
+    const [maskedCpf, setMaskedCpf] = useState("")
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedValue(event.target.value);
@@ -110,13 +113,23 @@ export function NewSale({setShowModal}:Props) {
         remove(index)
     }
 
+    const handleCPF = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 11);
+    const formatted = raw
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+      .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+
+    setCpf(formatted);
+  };
+
     return (
         < 
            >
 
             <div 
             onClick={(e) => e.stopPropagation()}
-            className='flex flex-col w-full max-w-[560px] h-full p-0  bg-white gyhd sm:rounded-2xl max-h-[90%]'
+            className='scale-up-center flex flex-col w-full max-w-[560px] h-full p-0  bg-white gyhd sm:rounded-sm max-h-[90%]'
             >
                 <div className="flex h-14 border-b items-center bg-neutral-0 gap-3 justify-between px-3 sm:px-6">
                     <div className={`hidden`}>
@@ -205,7 +218,7 @@ export function NewSale({setShowModal}:Props) {
                         </div> */}
                         {/* name */}
                         <div className='gap-1 h-min mb-4 flex flex-col'>
-                            <label className="text-sm font-medium text-gray-700">
+                            <label className="text-sm font-medium text-gray-900">
                                 <span className="text-red-600">*</span> Nome
                             </label>
                             <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
@@ -232,30 +245,57 @@ export function NewSale({setShowModal}:Props) {
                             }
                         </div>
                         {/* phone */}
-                        <div className='gap-3 h-min '>
-                            <span className=''>
-                                <label className='text-xs  text-gray-700 font-semibold'>
-                                    <span className="text-red-600">*</span> Telefone
-                                </label>
-                            </span>
-                            <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
-                                <input
-                                    {...register('phone')}
-                                    placeholder="1 999-9999"
-                                    type="text"
-                                    className='outline-none  text-sm  px-3'
-                                    minLength={13}
-                                    maxLength={14}
-                                    spellCheck="false"
-                                // value={phoneFormatter(watch("phone"))}
-                                />
+                        <div className='flex gap-3 w-full'>
+                            <div className='gap-3 h-min w-full '>
+                                <span className=''>
+                                    <label className='text-xs  text-gray-700 font-semibold'>
+                                        <span className="text-red-600">*</span> Código do país
+                                    </label>
+                                </span>
+                                <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                                    <input
+                                        {...register('phone')}
+                                        placeholder="1 999-9999"
+                                        type="text"
+                                        className='outline-none  text-sm  px-3'
+                                        minLength={13}
+                                        maxLength={14}
+                                        spellCheck="false"
+                                    // value={phoneFormatter(watch("phone"))}
+                                    />
+                                </div>
+                                {
+                                    errors.phone?.message &&
+                                    <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
+                                        {errors.phone?.message}
+                                    </p>
+                                }
                             </div>
-                            {
-                                errors.phone?.message &&
-                                <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
-                                    {errors.phone?.message}
-                                </p>
-                            }
+                            <div className='gap-3 h-min w-full'>
+                                <span className=''>
+                                    <label className='text-xs  text-gray-700 font-semibold'>
+                                        <span className="text-red-600">*</span> Telefone
+                                    </label>
+                                </span>
+                                <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                                    <input
+                                        {...register('phone')}
+                                        placeholder="1 999-9999"
+                                        type="text"
+                                        className='outline-none  text-sm  px-3'
+                                        minLength={13}
+                                        maxLength={14}
+                                        spellCheck="false"
+                                    // value={phoneFormatter(watch("phone"))}
+                                    />
+                                </div>
+                                {
+                                    errors.phone?.message &&
+                                    <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
+                                        {errors.phone?.message}
+                                    </p>
+                                }
+                            </div>
                         </div>
                         <div className='gap-1 h-min mb-4'>
                             <span className='mb-2'>
@@ -284,27 +324,32 @@ export function NewSale({setShowModal}:Props) {
                         {/* name */}
                         <div className='gap-1 h-min mb-4 flex flex-col'>
                             <label className="text-sm text-gray-700">
-                                CPF/CNPJ
+                                CPF {} 
                             </label>
                             <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                                 <input
                                     className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                     // name="fullName" 
                                     spellCheck="false"
-                                    placeholder={"Ricardo Albuquerque"}
-                                    type="text"
-                                    {...register("name", { pattern: /^[A-Za-z]+$/i })}
+                                    placeholder={"999.999.99-99"}
+                                    type='text'
+                                    inputMode="numeric" 
+                                    // maxLength={14}
+                                    // pattern="\d*" 
+                                    // minLength={11}
+                                    // max={14}
+                                    {...register("CPF", {maxLength: 11, onChange: handleCPF})}
                                     aria-invalid={errors.name ? "true" : "false"}
-                                    value={capitalizeWords(watch('name'))}
+                                    value={cpf}
                                 />
-                                <span className="h-10 hidden w-10 scale-90 flex items-center justify-center ">
-                                    <span className="loader" />
-                                </span>
+                                {/* <span className="text-blue-300 h-full">
+                                    { watch('CPF_CNPJ')}
+                                </span> */}
                             </div>
                             {
-                                errors.name?.message &&
+                                errors.CPF?.message &&
                                 <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
-                                    {errors.name?.message}
+                                    {errors.CPF?.message}
                                 </p>
                             }
                         </div>
@@ -357,16 +402,19 @@ export function NewSale({setShowModal}:Props) {
                             className="flex flex-col w-full  mb-4"
                         >
                             <p className="block text-sm text-gray-700">
-                                Selecione a experiencia
+                                Selecione a experiencia  <span>{watch("experience")}</span>
                             </p>
                             <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded hover:border-zinc-400">
-                                <select
-                                    value={selectedValue} 
-                                    onChange={handleChange}
+                                <select 
+                                    {...register("experience")}
+                                    value={watch('experience')} 
+                                    aria-placeholder='Experiência'
+                           
+                                    // onChange={handleChange}
                                     className="w-full h-full bg-white outline-none" 
                                     id="cars"
                                 >
-                                    <option className="h-8" value="select">selecionar</option>
+                                    <option className="h-8" value={undefined}></option>
                                     <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
                                     <option className="h-8" value="volvo">Volvo</option>
                                     <option value="opel">Opel</option>
@@ -400,6 +448,12 @@ export function NewSale({setShowModal}:Props) {
                                     <option value="audi">Audi</option>
                                 </select>
                             </div>
+                              {
+                                    errors.experience?.message &&
+                                    <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
+                                        {errors.experience.message}
+                                    </p>
+                                }
                         </div>
                         {/* service */}
                         {fields.map((field, index) => {
@@ -421,12 +475,11 @@ export function NewSale({setShowModal}:Props) {
                                         </p>
                                         <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded">
                                             <select
-                                               
-                                               
+                                            
                                                 className="w-full h-full bg-white outline-none" 
-                                                id="cars"
+                                                
                                             >
-                                                <option className="h-8" value="select">selecionar</option>
+                                                <option className="" value="select">selecionar</option>
                                                 <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
                                                 <option className="h-8" value="volvo">Volvo</option>
                                                 <option value="opel">Opel</option>
@@ -436,6 +489,8 @@ export function NewSale({setShowModal}:Props) {
                                                 <option value="audi">Audi</option>
                                             </select>
                                         </div>
+                                       
+                                      
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
                                         <p className="block text-sm text-gray-700">
@@ -447,22 +502,29 @@ export function NewSale({setShowModal}:Props) {
                                             placeholder="0,00"
                                             type="text" // decimal number
                                             className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                            value={watch('totalPriceBRL')}
+                                            value={capitalizeWords(watch('totalPriceBRL'))}
                                         />
                                     
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
                                         <p className="block text-sm text-gray-700">
-                                            Tipo de documentp
+                                            Tipo de document
                                         </p>
-                                        <input
+                                        <div className='w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded'>
+                                            <select className='w-full h-full outline-none bg-white'>
+                                                <option value={"cpf"}>CPF</option>
+                                                <option value={"other"}>Outro</option>
+                                    
+                                            </select>
+                                        </div>
+                                        {/* <input
                                             {...register("totalPriceBRL")}
                                             aria-label="Valor"
                                             placeholder="0,00"
                                             type="text" // decimal number
                                             className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
                                             value={watch('totalPriceBRL')}
-                                        />
+                                        /> */}
                                     
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
@@ -498,19 +560,20 @@ export function NewSale({setShowModal}:Props) {
                                         <p className="block text-sm text-gray-700">
                                             Notas
                                         </p>
+                                        <div className="h-20 w-full border-[1px] border-zinc-200 flex rounded-lg px-3 items-center hover:border-zinc-400">
                                         <textarea
-                                            {...register("totalPriceBRL")}
+                                            // {...register("totalPriceBRL")}
                                             aria-label="Valor"
-                                            
+                                            spellCheck={false}
                                             // type="" // decimal number
-                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                            value={watch('totalPriceBRL')}
+                                            className='outline-none'
+                                            // value={watch('totalPriceBRL')}
                                         />
-                                    
+                                    </div>
                                     </div>
                                     <DisableToggle/>
                                     <div className="flex flex-col w-full mb-4">
-                                        <p className="block text-sm text-gray-700">
+                                        <p className="block text-sm text-gray-900 font-medium">
                                             Preço
                                         </p>
                                         <input
@@ -518,7 +581,7 @@ export function NewSale({setShowModal}:Props) {
                                             aria-label="Valor"
                                             placeholder="0,00"
                                             type="text" // decimal number
-                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-3'
                                             value={watch('totalPriceBRL')}
                                         />
                                     
@@ -579,15 +642,15 @@ export function NewSale({setShowModal}:Props) {
                                     </div>
 
                                     <div className="w-full text-sm font-medium">
-                                        <div className="w-full flex justify-between">
+                                        <div className="w-full flex justify-between h-8">
                                             <span>Preço</span>
                                             <span>R$ 235,23</span>
                                         </div>
-                                        <div className="w-full flex justify-between">
+                                        <div className="w-full flex justify-between h-8">
                                             <span>Desconto</span>
                                             <span>R$ 235,23</span>
                                         </div>
-                                        <hr className="my-3"></hr>
+                                        <hr className="mb-3"></hr>
                                         <div className="w-full flex justify-between font-bold">
                                             <span>Subtotal total</span>
                                             <span>R$ 235,23</span>
@@ -669,12 +732,12 @@ export function NewSale({setShowModal}:Props) {
                                 <PlusIcon/>
                                 <span>Pix</span>
                             </button>
-                          <button className="flex gap-2">
+                          {/* <button className="flex gap-2">
                                 <span>Boleto</span>
                             </button>
                            <button className="flex gap-2">
                                 <span>Cheque</span>
-                            </button>
+                            </button> */}
                            <button className="flex gap-2">
                                 <span>Transferencia</span>
                             </button>
@@ -738,21 +801,21 @@ export function NewSale({setShowModal}:Props) {
                             </div>
                         </div>
                          <hr className="my-3"></hr>
-                       <div className="w-full text-sm font-medium">
-                            <div className="w-full flex justify-between">
-                                <span>Preço</span>
-                                <span>R$ 235,23</span>
-                            </div>
-                            <div className="w-full flex justify-between">
-                                <span>Desconto</span>
-                                <span>R$ 235,23</span>
-                            </div>
-                            <hr className="my-3"></hr>
-                            <div className="w-full flex justify-between font-bold">
-                                <span>Total total</span>
-                                <span>R$ 235,23</span>
-                            </div>
-                        </div>
+                       <div className="w-full text-sm font-medium bg-gray-100 p-3">
+                                        <div className="w-full flex justify-between h-8">
+                                            <span>Preço</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                        <div className="w-full flex justify-between h-8">
+                                            <span>Desconto</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                        <hr className="mb-3"></hr>
+                                        <div className="w-full flex justify-between font-bold">
+                                            <span>Total</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                    </div>
                     </div>
                     <div className="flex gap-3 flex-col sm:flex-row w-full sm:justify-end bg-red-0 mt-10">
                         <button

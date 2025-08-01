@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+
+  --color-brand: #2563eb;
+  --radius-base: 8px;
+}
+
+$radius-base: 8px;
+
+.label {
+  @apply px-4 py-2 bg-blue-600 text-white;
+
+  border-radius: $radius-base;
+
+  &:hover {
+    background-color: darken(#2563eb, 10%);
+  }
+}
+
 
 .bg-gradient {
   background: rgb(255,255,255);
