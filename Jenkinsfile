@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:20'
+    }
+  }
 
   environment {
     NODE_ENV = 'production'
@@ -36,9 +40,9 @@ pipeline {
       }
     }
 
-    stage('roda no modo de desenvolvimento') {
+    stage('Build') {
       steps {
-        sh 'npm run dev'
+        sh 'npm run build'
       }
     }
 
@@ -47,9 +51,8 @@ pipeline {
         branch 'main'
       }
       steps {
-        // Substitua pelo seu comando de deploy (ex: script bash, vercel, pm2, docker)
+        echo '🚀 Deploy step would run here'
         // sh './scripts/deploy.sh'
-        echo ''
       }
     }
   }
@@ -62,7 +65,6 @@ pipeline {
       echo '❌ Pipeline falhou!'
     }
     always {
-      // Arquiva os artefatos da build para facilitar acesso posterior
       archiveArtifacts artifacts: '.next/**', fingerprint: true
     }
   }
