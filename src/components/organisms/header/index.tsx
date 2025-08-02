@@ -13,10 +13,6 @@ import logger from "@/lib/pino";
 interface Props {
     pageName?: string
 }
-// sum.js
-export function sum(a:number, b: number) {
-    return a + b
-}
 
 export function Header ({
     pageName
@@ -43,7 +39,7 @@ export function Header ({
             <div className='w-full h-full flex items-center justify-between sm:px-8 max-w-[1550px]'>
                 <span className="flex gap-2 bg-red-0">
                     <button 
-                        onClick={() =>  createPortal(<SideBar isVisibleTitle={true}/>, document.body)} 
+                        onClick={() => createPortal(<SideBar isVisibleTitle={true}/>, document.body)} 
                         className="text-xl flex items-center gap-2 "
                     >
                         <MenuIcon size={20} strokeWidth={1}/>
