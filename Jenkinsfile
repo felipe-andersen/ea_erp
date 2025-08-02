@@ -68,6 +68,6 @@ pipeline {
       archiveArtifacts artifacts: '.next/**', fingerprint: true
     }
   }
-}
+
 
 //Docker Pipeline e Ant plugin
