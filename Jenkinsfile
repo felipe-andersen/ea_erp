@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     NODE_ENV = 'production'
+    GITHUB_TOKEN = credentials('16afc47d-2f60-41cc-90b5-239b405e0c91')
   }
 
   options {
@@ -13,7 +14,8 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main', url: 'https://github.com/seu-usuario/seu-repo.git'
+        git branch: 'main', url: 'https://github.com/felipe-andersen/ea_erp',
+        credentialsId: '16afc47d-2f60-41cc-90b5-239b405e0c91'
       }
     }
 
