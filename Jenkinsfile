@@ -15,13 +15,13 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '10'))
   }
 
-//   stages {
-//     stage('Checkout') {
-//       steps {
-//         git branch: 'main', url: 'https://github.com/felipe-andersen/ea_erp',
-//         credentialsId: '16afc47d-2f60-41cc-90b5-239b405e0c91'
-//       }
-//     }
+  stages {
+    // stage('Checkout') {
+    //   steps {
+    //     git branch: 'main', url: 'https://github.com/felipe-andersen/ea_erp',
+    //     credentialsId: '16afc47d-2f60-41cc-90b5-239b405e0c91'
+    //   }
+    // }
 
     stage('Install dependencies') {
       steps {
@@ -68,6 +68,6 @@ pipeline {
       archiveArtifacts artifacts: '.next/**', fingerprint: true
     }
   }
-
+}
 
 //Docker Pipeline e Ant plugin
