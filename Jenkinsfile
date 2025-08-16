@@ -70,4 +70,4 @@ pipeline {
   }
 }
 
-//Docker Pipeline e Ant plugin
+//Docker Pipeline

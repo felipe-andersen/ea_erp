@@ -164,7 +164,7 @@ type Experience = {
     disabled: boolean
 }
 
-export function Main() {
+export function Content() {
     // states
     const [hour, setHour] = useState("1 hour")
     const [time, setTime] = useState("1 time")

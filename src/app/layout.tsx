@@ -1,5 +1,7 @@
-import { initalizeTracing } from './tracing'
+import { initalizeTracing } from './tracing';
+import { initObservability } from './instrumentation';
 initalizeTracing()
+initObservability()
 import type { Metadata } from "next";
 import {Aleo, Archivo, Quicksand, Lexend } from "next/font/google";
 import "./globals.scss";
@@ -22,13 +24,10 @@ const archivo = Archivo({
     subsets: ["latin"],
 });
   
-
 const aleoSerif = Aleo({
     variable: "--font-aleo-serif",
     subsets: ["latin"],
 });
-
-
 
 export const metadata: Metadata = {
     title: "Embarque Angra",

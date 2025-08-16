@@ -6,11 +6,11 @@ import { CircleAlertIcon, Icon, MinusIcon, Settings } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { FieldArrayMethodProps, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { CreateExperienceSchema, PricesSchema } from './create-service-schema';
+import { PriceSchema } from './create-service-schema';
 import { capitalizeWords } from '@/shared/capitalizeWords';
 import logger from '@/lib/pino';
 import { FaQuestion } from 'react-icons/fa6';
-import CreatePriceFormTest from './cptest.view';
+import CreatePriceFormTest from './create-price';
 
 type Experience = {
     id: string
@@ -55,14 +55,14 @@ type DayAndTime = {
 
 const newPriceRange = {
     id: '',
-    ageRange: '', 
-    minPrice: 0,
-    maxPrice: 0,
-    defaultPrice: 0
+    ageRange: 'sdfgdsf', 
+    minPrice: '0',
+    maxPrice: '0',
+    defaultPrice:' 0'
 }
 
 const PricesFormSchema = z.object({
-    prices: z.array(PricesSchema)
+    prices: z.array(PriceSchema)
 });
 
 type PricesFormType = z.infer<typeof PricesFormSchema>
@@ -78,7 +78,7 @@ export default function CreatePriceForm() {
         control,
         } = useForm<PricesFormType>({ 
              mode: 'onChange', 
-            resolver: zodResolver(PricesSchema),
+            resolver: zodResolver(PriceSchema),
             defaultValues: {
                 prices: [
                     newPriceRange
@@ -100,7 +100,7 @@ export default function CreatePriceForm() {
       
     }
     return (
-        <div className="flex flex-col w-full  overflow-y-scroll bg-red-0">
+        <div className="">
             <div className="  max-w-[600px]">
                 <h2 className='mb-3 font-bold text-xl'>Preços</h2>
                 <button className='h-10 px-3 mb-3 text-sm  font-medium bg-neutral-200 rounded'
@@ -126,7 +126,7 @@ export default function CreatePriceForm() {
                                     <div className='gap-1 h-min mb-4 flex flex-col'>
                                         <label className="text-sm font-medium text-gray-700 flex gap-1">
                                             <span className="text-red-600">*</span> 
-                                            Faixa Etária ou categoria
+                                            Faixa Etária ou categoria não
                                             <div className='h-4 w-4 bg-neutral-200 rounded-full flex items-center justify-center'><FaQuestion size={10}/></div>
                                         </label>
                                         <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
@@ -147,7 +147,7 @@ export default function CreatePriceForm() {
                                             </span>
                                         </div>
                                         {(() => {
-                                            const result = PricesSchema.safeParse(prices?.[index])
+                                            const result = PriceSchema.safeParse(prices?.[index])
                                             if (!result.success) {
                                                 logger.info(result.error.formErrors.fieldErrors.ageRange?.[0])
                                                 const ageRangeError = result.error.formErrors.fieldErrors.ageRange?.[0]
@@ -252,7 +252,7 @@ export default function CreatePriceForm() {
                     </>
                 </form>
 
-                <CreatePriceFormTest/>
+
             </div>
         </div>
     )

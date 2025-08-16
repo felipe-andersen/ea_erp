@@ -11,7 +11,29 @@ import innerWidth from '@/hooks/useIsMobile';
 import FloatingMessageButton from '@/components/organisms/FloatingMessageButton/FloatingMessageButton.view';
 import { useEffect } from 'react';
 import Script from 'next/script';
+import { createMeter } from '@/app/instrumentation';
+import { metrics } from '@opentelemetry/api';
 
+
+const myMeter = metrics.getMeter('example');
+
+const events: string[] = [];
+
+function addEvent(name: string) {
+  events.push(name);
+}
+
+const counter = myMeter.createObservableCounter('events.counter');
+
+
+counter.addCallback((result) => {
+  result.observe(events.length); // <- só funciona se events.length > 0
+});
+
+// Simulando eventos
+setInterval(() => {
+  addEvent('teste');
+}, 3000);
 
 const moduleFileName = `templates/dashboard/dashboard.view.tsx`;
 
@@ -38,6 +60,7 @@ export default function Dashboard() {
                 <SideBar isVisibleTitle={isSidebarExtended} />
                 {/*<Main /> */}
             </div>
+            <button onClick={() => {}}>add event</button>
             <VLibras/>
             {/* {Width <= 768 ? <BottomNavigation /> : <></>} */}
         </div>

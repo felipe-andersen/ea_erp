@@ -98,7 +98,7 @@ export default function ExpensePayment({setShowModal}: Props) {
             </Button>
         </CardContent>
         </Card>
-        <CheckSVGAnimation/>
+
     </div>
   )
 }

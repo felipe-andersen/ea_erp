@@ -1,9 +1,9 @@
-'use client'
-import { ServicesList } from "@/components/templates/services/services.view";
+'use client';
+import { Products } from "@/components/templates/products/products.view";
 
 
-export default function ServicesPage() {
+export default function ProductsPage() {
     return (
-        <ServicesList/>
+        <Products/>
     )
 }

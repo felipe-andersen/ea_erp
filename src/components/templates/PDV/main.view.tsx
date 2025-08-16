@@ -7,6 +7,8 @@ import { Modal } from "@/components/organisms/modal/modal.view";
 import ExpensePayment from "@/components/organisms/expense-payment/expense-payment.view";
 import ReceivePayment from "@/components/organisms/receive-payment/receive-payment.view";
 import RefundPayment from "@/components/organisms/refund-payment/refund-payment.view";
+import { useRouter } from "next/navigation";
+import SellBaggageVolume from "@/components/organisms/sell-baggage-volume/sell-baggage-volume.view";
 
 
 export function Main() {
@@ -14,6 +16,8 @@ export function Main() {
     const [expensePaymentVisibility, setExpensePaymentVisibility] = useState(false);
     const [receivePaymentVisibility, setReceivePaymentVisibility] = useState(false);
     const [refundPaymentVisibility, setRefundPaymentVisibility] = useState(false);
+     const [ sellBaggageVolume, setSellBaggageVolume ] = useState<boolean>(false);
+    const router = useRouter();
     
 
     return (
@@ -54,6 +58,16 @@ export function Main() {
                     <RefundPayment setShowModal={setRefundPaymentVisibility}/>
                 </Modal>
             }
+            {
+                <Modal
+                    onClose={setSellBaggageVolume}
+                    isOpen={sellBaggageVolume}
+                >
+                   <SellBaggageVolume
+                        setShowModal={setSellBaggageVolume}
+                    />
+                </Modal>
+            }
                 <div className="flex gap-5 w-full h-full flex-col">
                     <div className=" w-full h-full flex flex-col sm:flex-start gap-5 p-5">
                         <span className="flex flex-col gap-2 w-full">
@@ -64,7 +78,7 @@ export function Main() {
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
                             </p>
                         </span>
-                        <div className="flex gap-3 py-0 h-full w-full bg-red-0 w-min">
+                        <div className="flex gap-3 py-0 h-full w-full bg-red-0 w-min flex">
                             <button 
                                 onClick={() => setIsModalOpen(true)}
                                 className="aspect-square w-[120px] h-[120px] py-4 px-3 hover:p-3 rounded text-sm flex justify-between 
@@ -75,16 +89,14 @@ export function Main() {
                             
                             </button>
                             <button 
-                                onClick={() => {}}
                                 className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
                                 bg-blue-900 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
                             >
                                 <ArrowUpRightIcon size={17} className="-mr-2"/>
                                 <span>Consultar tickets vendidos</span>
-                            
                             </button>
                             <button 
-                                onClick={() => {}}
+                                onClick={() => router.push("/dashboard/products")}
                                 className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
                                 bg-blue-900 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
                             >
@@ -102,7 +114,7 @@ export function Main() {
                             
                             </button>
                             <button 
-                                onClick={() => {}}
+                                onClick={() => setSellBaggageVolume(true)}
                                 className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
                                 bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
                             >

@@ -74,6 +74,7 @@ export function NewSale({setShowModal}:Props) {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [cpf, setCpf]  = useState('');
     const [maskedCpf, setMaskedCpf] = useState("")
+    const [valueNumeric, setValueNumeric] = useState<number | string>("")
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedValue(event.target.value);
@@ -98,6 +99,13 @@ export function NewSale({setShowModal}:Props) {
         // }
     })
 
+    function onlyNumbers(e: React.ChangeEvent<HTMLInputElement>): void {
+        const value = e.target.value.replace(/\D/g, '');
+        const numeric = value ? parseInt(value, 10) : '';
+        setValueNumeric(numeric);
+    }
+
+
     const { fields:serviceFilds, append:serviceAppend, remove:serviceRemove } = useFieldArray({control, name:'servicesList'})
     const { fields, append, remove } = useFieldArray({control, name:'payment'})
 
@@ -114,19 +122,17 @@ export function NewSale({setShowModal}:Props) {
     }
 
     const handleCPF = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const raw = e.target.value.replace(/\D/g, '').slice(0, 11);
-    const formatted = raw
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
-      .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+        const raw = e.target.value.replace(/\D/g, '').slice(0, 11);
+        const formatted = raw
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
 
-    setCpf(formatted);
+        setCpf(formatted);
   };
 
     return (
-        < 
-           >
-
+        <>
             <div 
             onClick={(e) => e.stopPropagation()}
             className='scale-up-center flex flex-col w-full max-w-[560px] h-full p-0  bg-white gyhd sm:rounded-sm max-h-[90%]'
@@ -192,8 +198,8 @@ export function NewSale({setShowModal}:Props) {
                     {/* <h2 className=' w-full text-xl font-bold mb-6 mt-12'>
                         Nova venda
                     </h2> */}
-                    <div className="w-full">
-                        <span className="flex justify-between items-center bg-neutral-00 mt-0 mb-5">
+                    <div className="w-full mt-2">
+                        <span className="flex justify-between items-center bg-neutral-00 mt-0 mb-3">
                             <h3 className='text-md font-bold '>
                                 Dados do Cliente
                             </h3>
@@ -219,7 +225,8 @@ export function NewSale({setShowModal}:Props) {
                         {/* name */}
                         <div className='gap-1 h-min mb-4 flex flex-col'>
                             <label className="text-sm font-medium text-gray-900">
-                                <span className="text-red-600">*</span> Nome
+                                <span className="text-red-600">*</span> 
+                                Nome
                             </label>
                             <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
                                 <input
@@ -246,13 +253,12 @@ export function NewSale({setShowModal}:Props) {
                         </div>
                         {/* phone */}
                         <div className='flex gap-3 w-full'>
-                            <div className='gap-3 h-min w-full '>
-                                <span className=''>
-                                    <label className='text-xs  text-gray-700 font-semibold'>
-                                        <span className="text-red-600">*</span> Código do país
-                                    </label>
-                                </span>
-                                <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                            <div className='gap-1 h- w-full mb-4 flex flex-col'>
+                                <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                    <span className="text-red-600">*</span> 
+                                    <span className="">Código do país</span> 
+                                </label>
+                                <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400">
                                     <input
                                         {...register('phone')}
                                         placeholder="1 999-9999"
@@ -271,15 +277,15 @@ export function NewSale({setShowModal}:Props) {
                                     </p>
                                 }
                             </div>
-                            <div className='gap-3 h-min w-full'>
+                            <div className='gap-1 h-min w-full mb-4 flex flex-col'>
                                 <span className=''>
-                                    <label className='text-xs  text-gray-700 font-semibold'>
-                                        <span className="text-red-600">*</span> Telefone
+                                    <label className='text-sm text-gray-900 font-medium'>
+                                        <span className="text-red-600">*</span> Telefone {valueNumeric}
                                     </label>
                                 </span>
-                                <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                                <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400">
                                     <input
-                                        {...register('phone')}
+                                        {...register('phone', {onChange: onlyNumbers})}
                                         placeholder="1 999-9999"
                                         type="text"
                                         className='outline-none  text-sm  px-3'
@@ -287,6 +293,7 @@ export function NewSale({setShowModal}:Props) {
                                         maxLength={14}
                                         spellCheck="false"
                                     // value={phoneFormatter(watch("phone"))}
+                                        value={valueNumeric}
                                     />
                                 </div>
                                 {
@@ -297,23 +304,23 @@ export function NewSale({setShowModal}:Props) {
                                 }
                             </div>
                         </div>
-                        <div className='gap-1 h-min mb-4'>
-                            <span className='mb-2'>
-                                <label className='text-sm mb-4 text-gray-700'>
-                                    Email
-                                </label>
-                            </span>
-                            <br />
-                            <input
-                                {...register('email')}
-                                placeholder="exemple@youremail.com"
-                                className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded pl-5'
-                                value={watch('email')}
-                                type="text"
-                                minLength={1}
-                                spellCheck="false"
-                                maxLength={50}
-                            />
+                        <div className='gap-1 h- w-full mb-4 flex flex-col'>
+                            <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                <span className="text-red-600">*</span> 
+                                <span className="">Email</span> 
+                            </label>
+                            <div className='h-12 w-full border-[1px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400'>
+                                <input
+                                    {...register('email')}
+                                    placeholder="exemple@youremail.com"
+                                    className='outline-none  text-sm  px-3'
+                                    value={watch('email')}
+                                    type="text"
+                                    minLength={1}
+                                    spellCheck="false"
+                                    maxLength={50}
+                                />
+                            </div>
                             {
                                 errors.email?.message &&
                                 <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
@@ -323,10 +330,11 @@ export function NewSale({setShowModal}:Props) {
                         </div>
                         {/* name */}
                         <div className='gap-1 h-min mb-4 flex flex-col'>
-                            <label className="text-sm text-gray-700">
-                                CPF {} 
+                             <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                <span className="text-red-600">*</span> 
+                                <span className="">CPF</span> 
                             </label>
-                            <div className="h-12 w-full border-[2px] border-zinc-200 flex rounded-lg  items-center hover:border-zinc-400">
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400">
                                 <input
                                     className="text-sm w-full h-full px-3 outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm"
                                     // name="fullName" 
@@ -386,32 +394,28 @@ export function NewSale({setShowModal}:Props) {
                         </div>
                     </div> */}
                     <hr className="my-3"></hr>
-                    <div className="w-full ">
-                        <span className="flex justify-between items-center bg-neutral-00 mt-10 mb-5">
+                    <div className="gap-1 h-min flex flex-col w-full">
+                        <span className="flex justify-between items-center bg-neutral-00 mb-3">
                             <h3 className='text-md font-bold'>
                                 Experiência
                             </h3>
                         </span>
-                        <button
-                            className="px-3 py-2 bg-gray-100 text-sm rounded-sm"
-                            onClick={() => newTicket()}
-                        >
-                            Novo ticket
-                        </button>
+        
                         <div 
-                            className="flex flex-col w-full  mb-4"
+                            className="gap-1 h-min mb-4 flex flex-col"
                         >
-                            <p className="block text-sm text-gray-700">
-                                Selecione a experiencia  <span>{watch("experience")}</span>
-                            </p>
-                            <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded hover:border-zinc-400">
+                            <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                <span className="text-red-600">*</span> 
+                                <span className="">Selecione a experiencia</span> 
+                            </label>
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
                                 <select 
                                     {...register("experience")}
                                     value={watch('experience')} 
                                     aria-placeholder='Experiência'
                            
                                     // onChange={handleChange}
-                                    className="w-full h-full bg-white outline-none" 
+                                    className="w-full h-full bg-white outline-none text-sm" 
                                     id="cars"
                                 >
                                     <option className="h-8" value={undefined}></option>
@@ -455,6 +459,13 @@ export function NewSale({setShowModal}:Props) {
                                     </p>
                                 }
                         </div>
+                        <button
+                            className="disabled:bg-gray-100 disabled:text-gray-400 px-3 py-2 bg-gray-200 text-sm rounded-sm w-min whitespace-nowrap font-medium mb-4"
+                            onClick={() => errors.experience?.message ? () => {} : newTicket()}
+                            disabled={errors.experience?.message ? true : false}
+                        >
+                            Novo ticketss
+                        </button>
                         {/* service */}
                         {fields.map((field, index) => {
                             return (
@@ -468,18 +479,18 @@ export function NewSale({setShowModal}:Props) {
                                    
                                     <div 
                                         key={field.id}
-                                        className="flex flex-col w-full  mb-4"
+                                        className="gap-1 h-min mb-4 flex flex-col"
                                     >
-                                        <p className="block text-sm text-gray-700">
-                                            Selecione a faixa etária ou categoria
-                                        </p>
-                                        <div className="w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded">
+                                        <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                            <span className="text-red-600">*</span> 
+                                            <span className="">Selecione a faixa etária ou categoria</span> 
+                                        </label>
+                                        <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
                                             <select
                                             
-                                                className="w-full h-full bg-white outline-none" 
+                                                className="text-sm w-full h-full outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm text-sm" 
                                                 
                                             >
-                                                <option className="" value="select">selecionar</option>
                                                 <option value="BRA4E54 - HB20 - Hyundai">BRA4E54 - HB20 - Hyundai</option>
                                                 <option className="h-8" value="volvo">Volvo</option>
                                                 <option value="opel">Opel</option>
@@ -493,9 +504,10 @@ export function NewSale({setShowModal}:Props) {
                                       
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
-                                        <p className="block text-sm text-gray-700">
-                                            Nome Completo
-                                        </p>
+                                         <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                            <span className="text-red-600">*</span> 
+                                            <span className="">Nome completo</span> 
+                                        </label>
                                         <input
                                             {...register("totalPriceBRL")}
                                             aria-label="Valor"
@@ -507,11 +519,12 @@ export function NewSale({setShowModal}:Props) {
                                     
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
-                                        <p className="block text-sm text-gray-700">
-                                            Tipo de document
-                                        </p>
-                                        <div className='w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded'>
-                                            <select className='w-full h-full outline-none bg-white'>
+                                        <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                            <span className="text-red-600">*</span> 
+                                            <span className="">Tipo de documento</span> 
+                                        </label>
+                                        <div className='w-full mt-2 text-sm h-12 border border-zinc-300 px-2 rounded bg-gray-100 text-gray-600'>
+                                            <select className='w-full h-full outline-none disabled:bg-gray-100' defaultValue={'cpf'} disabled>
                                                 <option value={"cpf"}>CPF</option>
                                                 <option value={"other"}>Outro</option>
                                     
@@ -528,28 +541,29 @@ export function NewSale({setShowModal}:Props) {
                                     
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
-                                        <p className="block text-sm text-gray-700">
-                                            N do documento
-                                        </p>
+                                         <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                            <span className="text-red-600">*</span> 
+                                            <span className="">N do documento</span> 
+                                        </label>
                                         <input
                                             {...register("totalPriceBRL")}
                                             aria-label="Valor"
                                             placeholder="0,00"
                                             type="text" // decimal number
                                             className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
-                                            value={watch('totalPriceBRL')}
                                         />
                                     
                                     </div>
                                     <div className="flex flex-col w-full mb-4">
-                                        <p className="block text-sm text-gray-700">
-                                            Data de nascimento
-                                        </p>
+                                        <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                            <span className="text-red-600">*</span> 
+                                            <span className="">Data de nascimento</span> 
+                                        </label>
                                         <input
                                             {...register("totalPriceBRL")}
                                             aria-label="Valor"
                                             placeholder="0,00"
-                                            type="text" // decimal number
+                                            type="date" 
                                             className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-5'
                                             value={watch('totalPriceBRL')}
                                         />
@@ -557,9 +571,9 @@ export function NewSale({setShowModal}:Props) {
                                     </div>
                                     
                                     <div className="flex flex-col w-full mb-4">
-                                        <p className="block text-sm text-gray-700">
-                                            Notas
-                                        </p>
+                                        <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                            <span className="">Notas</span> 
+                                        </label>
                                         <div className="h-20 w-full border-[1px] border-zinc-200 flex rounded-lg px-3 items-center hover:border-zinc-400">
                                         <textarea
                                             // {...register("totalPriceBRL")}
@@ -590,55 +604,16 @@ export function NewSale({setShowModal}:Props) {
                                         Aplicar desconto
                                     </button> */}
                                     {/* <h4 className='text-xs font-bold  mt-6 mb-5'>Desconto</h4> */}
-                                    <div className="flex gap-2 mb-4">
-                                    <Tabs defaultValue="percentage" className="max-w-[400px] w-full text-sm">
-                                        <TabsList>
-                                            <TabsTrigger value="percentage" >
-                                                Porcentagem
-                                            </TabsTrigger>
-                                            <TabsTrigger value="code">
-                                                Código
-                                            </TabsTrigger>
-                                        </TabsList>
-                                        <TabsContent value="percentage">
-                                        <div className="w-full outline-none text-sm h-12 border border-zinc-300 rounded  relative flex items-center ">
-                                                <input 
-                                                    {...register("discount")}
-                                                    value={watch('discount')}
-                                                    type="text"
-                                                    maxLength={3}
-                                                    placeholder="%" 
-                                                    className='pl-3 w-full h-full '
-                                                />
-                                            </div>
-                                            {watch('discount')}
-                                        </TabsContent>
-                                        <TabsContent value="code">
-                                            <div className="w-full outline-none text-sm h-12 border border-zinc-300 rounded  relative flex items-center ">
-                                                <input 
-                                                    {...register("discount")}
-                                                    value={watch('discount')}
-                                                    type="text"
-                                                    maxLength={4}
-                                                    placeholder="" 
-                                                    className='pl-3 w-full h-full '
-                                        
-                                                    onChange={e => {
-                                                    }}
-                                                />
-                                            </div>
-                                            {watch('discount')}
-                                        </TabsContent>
-                                    </Tabs>
-                                        {/* <button className="h-8 w-min px-3 text-xs rounded-full bg-zinc-500 hover:bg-zinc-400 focus:bg-zinc-700 text-white font-medium">
-                                            Porcentagem
-                                        </button>
-                                        <button className="h-8 w-min px-3 text-xs rounded-full bg-zinc-500 hover:bg-zinc-400 focus:bg-zinc-700 text-white font-medium">
-                                            Código
-                                        </button>
-                                        <button className="h-8 w-min px-3 text-xs rounded-full bg-zinc-500 hover:bg-zinc-400 focus:bg-zinc-700 text-white font-medium">
-                                            Moeda
-                                        </button> */}
+                                    <div className="flex flex-col w-full mb-4">
+                                        <input
+                                            {...register("totalPriceBRL")}
+                                            aria-label="Valor"
+                                            placeholder="Código de desconto"
+                                            type="text" // decimal number
+                                            className='outline-none w-full mt-2 text-sm h-12 border border-zinc-300 rounded px-3'
+                                            value={watch('totalPriceBRL')}
+                                        />
+                                    
                                     </div>
 
                                     <div className="w-full text-sm font-medium">
@@ -714,34 +689,33 @@ export function NewSale({setShowModal}:Props) {
                         </p>
                         {/* Vai ser input tipo checkbox */}
 
-                        <hr className="my-3"></hr>
+                        <hr className="my-4"></hr>
 
-                        <h4 className='font-bold  mt-10 mb-5 '>
+                        <h4 className='font-bold mb-3 '>
                             Pagamento
                         </h4>
-                        <div className="py-3 pr-3 flex flex-col">
-                            <button className="flex gap-2">
-                                <PlusIcon/>
-                                <span>Cartão de crédito</span>
-                            </button>
-                            <button className="flex gap-2">
-                                <PlusIcon/>
-                                <span>Cartão de débito</span>
-                            </button>
-                            <button className="flex gap-2">
-                                <PlusIcon/>
-                                <span>Pix</span>
-                            </button>
+                        <div className="flex flex-col gap-3">
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
+                                <input placeholder='Cartão de crédito' className='text-sm w-full h-full outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm'/>
+                            </div>
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
+                                <input placeholder='Cartão de crédito' className='text-sm w-full h-full outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm'/>
+                            </div>
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
+                                <input placeholder='Pix' className='text-sm w-full h-full outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm'/>
+                            </div>
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
+                                <input placeholder='Depósito' className='text-sm w-full h-full outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm'/>
+                            </div>
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
+                                <input placeholder='Dinheiro' className='text-sm w-full h-full outline-none bg-transparent placeholder:text-neutral-400 outline-none placeholder:text-sm'/>
+                            </div>
                           {/* <button className="flex gap-2">
                                 <span>Boleto</span>
                             </button>
                            <button className="flex gap-2">
                                 <span>Cheque</span>
                             </button> */}
-                           <button className="flex gap-2">
-                                <span>Transferencia</span>
-                            </button>
-
                         </div>
                     
                         {/* <Tabs defaultValue="Adiantado" className="max-w-[400px] w-full text-sm">
@@ -785,8 +759,8 @@ export function NewSale({setShowModal}:Props) {
                                 </select>
                             </div>
                         </div> */}
-                        <hr className="my-3"></hr>
-                        <div className="flex flex-col gap-3 py-3 my-6 text-gray-700 text-sm">
+                        <hr className="my-4"></hr>
+                        <div className="flex flex-col gap-3 py- my-3 text-gray-700 text-sm">
                             <div className="flex gap-3">
                                 <div className="">
                                     <input type="checkbox" />
@@ -800,33 +774,47 @@ export function NewSale({setShowModal}:Props) {
                                 Enviar Nota Fiscal
                             </div>
                         </div>
-                         <hr className="my-3"></hr>
+                         <hr className="my-4"></hr>
                        <div className="w-full text-sm font-medium bg-gray-100 p-3">
-                                        <div className="w-full flex justify-between h-8">
+                                        <div className="w-full items-center flex justify-between h-7">
                                             <span>Preço</span>
                                             <span>R$ 235,23</span>
                                         </div>
-                                        <div className="w-full flex justify-between h-8">
+                                        <div className="w-full items-center flex justify-between h-7">
                                             <span>Desconto</span>
+                                            <span>R$ -235,23</span>
+                                        </div>
+                                        <hr className="my-3"></hr>
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
+                                            <span>Subtotal</span>
                                             <span>R$ 235,23</span>
                                         </div>
-                                        <hr className="mb-3"></hr>
-                                        <div className="w-full flex justify-between font-bold">
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
+                                            <span>Juros</span>
+                                            <span>R$ +235,23</span>
+                                        </div>
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
                                             <span>Total</span>
+                                            <span>R$ 235,23</span>
+                                        </div>
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
+                                            <span>Valor pago</span>
                                             <span>R$ 235,23</span>
                                         </div>
                                     </div>
                     </div>
-                    <div className="flex gap-3 flex-col sm:flex-row w-full sm:justify-end bg-red-0 mt-10">
+                    {/* <TransactionSuccessOverlay/> */}
+                    <div className="flex gap-3 flex-col sm:flex-row w-full sm:justify-end bg-red-0 mt-10 ">
                         <button
-                            className="bg-green-600 hover:bg-green-500 text-md text-white rounded-md font-semibold whitespace-nowrap h-12 w-full sm:w-min px-5"
+                            className="disabled:bg-gray-400 bg-green-600 hover:bg-green-500 text-sm text-white rounded-md font-semibold whitespace-nowrap h-10 w-full sm:w-min px-3"
                             onClick={() => { }}
+                            disabled={true}
                         >
                             Gerar Venda
                         </button>
                         <button 
                             onChange={() => setShowModal(false)}
-                            className="border border-neutral-300 w-full sm:w-min text-md text-black-400 rounded-md font-semibold whitespace-nowrap h-12 w-full px-5">
+                            className="border border-neutral-300 w-full sm:w-min text-md text-black-400 rounded-md font-semibold whitespace-nowrap h-10 w-full px-3">
                             Cancelar
                         </button>
                     </div>
@@ -884,6 +872,21 @@ export function DisableToggle() {
                 </div>
                
             </label>
+        </div>
+    )
+}
+
+
+import { CheckCircle } from "lucide-react";
+import CheckSVGAnimation from '@/assets/check-svg-animation/check-svg-animation';
+
+export function TransactionSuccessOverlay() {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-4 text-white">
+                <CheckSVGAnimation/>
+                <p className="text-xl font-semibold">Transação Concluída</p>
+            </div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import CreateExperience from "@/components/templates/create-service/create-experience.view";
+import CreateExperience from "@/components/templates/create-experience/create-experience.view";
 
 
 export default function ItemPage() {

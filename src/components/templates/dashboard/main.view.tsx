@@ -1,15 +1,12 @@
 
 'use client'
-import Accordion from 'react-bootstrap/Accordion';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
 import { X, Bell, MessageSquareIcon, MoveRight, EllipsisVertical, Search, Plus, ArrowUpRight, Sidebar, CheckIcon, ArrowRightFromLine, ArrowLeftToLine, ChevronRight, ChevronDown} from "lucide-react";
 import { useState, useRef, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { trace } from "@opentelemetry/api";
+import { metrics, trace } from "@opentelemetry/api";
 import { Modal } from '@/components/organisms/modal/modal.view';
 import { Spinnaker } from 'next/font/google';
 import { CgSpinner } from 'react-icons/cg';
@@ -17,7 +14,9 @@ import Schedule from '@/components/organisms/schedule/schedule.view';
 import { capitalizeWords } from '@/shared/capitalizeWords';
 import { createPortal } from 'react-dom';
 import { addCustomer } from './dashboard.model';
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next';
+
+
 
 
 export function Main() {
@@ -32,7 +31,6 @@ export function Main() {
     }, [])
 
     useEffect(() => {
-
         const tracer = trace.getTracer("main")
         const span = tracer.startSpan("Montando MeuComponente");
         
@@ -43,14 +41,13 @@ export function Main() {
         console.log("📡 Enviando trace para Jaeger...");
 
         return () => {
-       
-         
+        
         }
     }, []);
     
     const target = useRef(null);
     const { t } = useTranslation('myNamespace');
-    const name = "felipe"
+
     return (
     <main className={`relative flex h-full box-border overflow-hidden bg-white`}>
         <div className='flex w-full overflow-y-scroll h-full box-border '>
