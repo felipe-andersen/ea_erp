@@ -93,7 +93,7 @@ export function Main() {
                                 bg-blue-900 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
                             >
                                 <ArrowUpRightIcon size={17} className="-mr-2"/>
-                                <span>Consultar tickets vendidos</span>
+                                <span>Consultar vendas</span>
                             </button>
                             <button 
                                 onClick={() => router.push("/dashboard/products")}
@@ -119,7 +119,7 @@ export function Main() {
                                 bg-blue-500 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
                             >
                                 <ArrowUpRightIcon size={17} className="-mr-2"/>
-                                <span>Vender volume de bagagem</span>
+                                <span>Consultar volume de bagagem</span>
                             
                             </button>
                         </div>

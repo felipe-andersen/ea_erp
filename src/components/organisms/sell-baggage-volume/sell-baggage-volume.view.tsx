@@ -34,22 +34,24 @@ export default function SellBaggageVolume({ setShowModal }: Props ) {
                         <ArrowLeft/>
                     </div>
                     <h2 className='text-xl font-bold '>
-                        Nova venda
+                        Volume de Bagagem
                     </h2>
                     <button 
                         onClick={() => setShowModal(false)}
-                        className={`h-full flex items-center justify-center self-end text-sm text-red-500`}
+                        className={`h-full flex items-center justify-center self-end text-sm text-red-0`}
                     >
-                        Cancelar
+                        Fechar
                     </button>
                 </div>
                 <div className='w-full h-full flex flex-col p-6 gap-3'>
-                    <div className="bg-gray-0 w-36 rounded-md border overflow-hidden">
+                    <div className="bg-gray-0 w-40 rounded-md border overflow-hidden">
                         <div className="flex flex-col rounded-sm w-full h-full items-center text-center bg-red-0 ">
                             <div className="overflow-hidden w-full aspect-square">
                                 <img src="https://static.vecteezy.com/system/resources/previews/051/004/726/non_2x/a-drawing-of-a-suitcase-on-wheels-vector.jpg"/>
                             </div>
-                            <div className="w-full text-sm mt-3 mb-3">fgfgfg</div>
+                            <div className="w-full text-sm mt-3 mb-3">
+                                {"20kg | 50x30x70cm"}
+                            </div>
                         </div>
                     </div>
                     <div className="bg-gray-0 w-36 rounded-md border overflow-hidden">
@@ -57,7 +59,7 @@ export default function SellBaggageVolume({ setShowModal }: Props ) {
                             <div className="overflow-hidden w-full aspect-square">
                                 <img src="https://static.vecteezy.com/system/resources/previews/051/004/726/non_2x/a-drawing-of-a-suitcase-on-wheels-vector.jpg"/>
                             </div>
-                            <div className="w-full text-sm mt-3 mb-3">fgfgfg</div>
+                            {"20kg | 50x30x70cm"}
                         </div>
                     </div>
                     

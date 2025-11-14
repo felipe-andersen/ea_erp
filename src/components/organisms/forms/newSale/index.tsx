@@ -393,6 +393,44 @@ export function NewSale({setShowModal}:Props) {
                             </div>
                         </div>
                     </div> */}
+
+                    <div className='gap-1 h-min flex flex-col w-full'>
+                        <span className="flex justify-between items-center bg-neutral-00 mb-3">
+                            <h3 className='text-md font-bold'>
+                                Produto
+                            </h3>
+                        </span>
+        
+                        <div 
+                            className="gap-1 h-min mb-4 flex flex-col"
+                        >
+                            <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                <span className="text-red-600">*</span> 
+                                <span className="">Selecione o produto</span> 
+                            </label>
+                            <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
+                                <select 
+                                    // {...register("product")}
+                                   
+                                    aria-placeholder='product'
+                                    // onChange={handleChange}
+                                    className="w-full h-full bg-white outline-none text-sm" 
+                                    id="cars"
+                                >
+                                    <option value="BRA4E54 - HB20 - Hyundai">Experiencia</option>
+                                    <option className="h-8" value="volvo">Volume de bagagem</option>
+                                    <option value="opel">Seguro</option>
+                                </select>
+                            </div>
+                              {
+                                    errors.experience?.message &&
+                                    <p className="min-h-5 text-xs text-red-400 flex gap-2 flex ">
+                                        {errors.experience.message}
+                                    </p>
+                                }
+                        </div>
+
+                    </div>
                     <hr className="my-3"></hr>
                     <div className="gap-1 h-min flex flex-col w-full">
                         <span className="flex justify-between items-center bg-neutral-00 mb-3">
@@ -403,11 +441,13 @@ export function NewSale({setShowModal}:Props) {
         
                         <div 
                             className="gap-1 h-min mb-4 flex flex-col"
-                        >
-                            <label className='text-sm text-gray-900 gap-1 flex font-medium'>
-                                <span className="text-red-600">*</span> 
-                                <span className="">Selecione a experiencia</span> 
-                            </label>
+                        >   <span className='flex justify-between'>
+                                <label className='text-sm text-gray-900 gap-1 flex font-medium'>
+                                    <span className="text-red-600">*</span> 
+                                    <span className="">Selecione a experiencia</span> 
+                                </label>
+                                <button className='text-xs text-zinc-600'>Excluir</button>
+                            </span>
                             <div className="h-12 w-full border-[1px] border-zinc-200 flex rounded-lg items-center hover:border-zinc-400 px-3">
                                 <select 
                                     {...register("experience")}
@@ -464,7 +504,7 @@ export function NewSale({setShowModal}:Props) {
                             onClick={() => errors.experience?.message ? () => {} : newTicket()}
                             disabled={errors.experience?.message ? true : false}
                         >
-                            Novo ticketss
+                            Novo tickets
                         </button>
                         {/* service */}
                         {fields.map((field, index) => {
@@ -775,7 +815,7 @@ export function NewSale({setShowModal}:Props) {
                             </div>
                         </div>
                          <hr className="my-4"></hr>
-                       <div className="w-full text-sm font-medium bg-gray-100 p-3">
+                       <div className="w-full text-sm font-medium bg-gray-100 ">
                                         <div className="w-full items-center flex justify-between h-7">
                                             <span>Preço</span>
                                             <span>R$ 235,23</span>
@@ -784,20 +824,23 @@ export function NewSale({setShowModal}:Props) {
                                             <span>Desconto</span>
                                             <span>R$ -235,23</span>
                                         </div>
-                                        <hr className="my-3"></hr>
-                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
+                                         <div className="w-full items-center flex justify-between h-7">
+                                            <span>Descontos totais</span>
+                                            <span>R$ -235,23</span>
+                                        </div>
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold bg-zinc-300">
                                             <span>Subtotal</span>
                                             <span>R$ 235,23</span>
                                         </div>
-                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
-                                            <span>Juros</span>
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold bg-zinc-300">
+                                            <span>Impostos</span>
                                             <span>R$ +235,23</span>
                                         </div>
-                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold bg-zinc-300">
                                             <span>Total</span>
                                             <span>R$ 235,23</span>
                                         </div>
-                                        <div className="w-full items-center flex justify-between h-7 font-extrabold">
+                                        <div className="w-full items-center flex justify-between h-7 font-extrabold bg-zinc-900 text-white">
                                             <span>Valor pago</span>
                                             <span>R$ 235,23</span>
                                         </div>

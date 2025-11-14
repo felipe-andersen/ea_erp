@@ -4,16 +4,16 @@ import { Content } from "./content.view";
 import SideBar from "@/components/organisms/side-bar/side-bar.view";
 
 
-export function Ticket() {
+export function Product({productName}:{productName: string}) {
     return (
         <div 
             className="flex flex-col w-full h-full overflow-hidden"
-            data-testId=""
+            data-testid="services-template"
         >
             <Header pageName="ORM"/>
-            <div className="flex h-[calc(100vh-80px)] bg-neutral-100 w-full">
+            <div className="flex h-[calc(100vh-48px)] bg-neutral-100 w-full">
                 <SideBar isVisibleTitle/>
-                <Content/>
+                <Content productId={productName}/>
             </div>
         </div>
     )

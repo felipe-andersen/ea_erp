@@ -1,6 +1,6 @@
 'use client'
 import { result } from "@/lib/date-fns/config";
-import { ArrowRight, Bell, MenuIcon, MenuSquare, MessageSquareText, MessagesSquareIcon, RotateCcw, Search } from "lucide-react";
+import { ArrowRight, Bell, MenuIcon, MenuSquare, MessageSquareText, MessagesSquareIcon, Pyramid, RotateCcw, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -35,8 +35,8 @@ export function Header ({
     }
 
     return (
-        <header  className='w-full h-14 sm:h-14 flex sticky top-0 bg-white z-[1030] border-b'>
-            <div className='w-full h-full flex items-center justify-between sm:px-8 max-w-[1550px]'>
+        <header  className='w-full h-14 sm:h-20 items-center flex sticky top-0 bg-white z-[1030] border-b'>
+            <div className='w-full h-full flex items-center justify-between sm:px-8 sm:pr-12 max-w-[1550px]'>
                 <span className="flex gap-2 bg-red-0">
                     <button 
                         onClick={() => createPortal(<SideBar isVisibleTitle={true}/>, document.body)} 
@@ -51,6 +51,10 @@ export function Header ({
                         {pageName}
                     </Link>
                 </span>
+                <div className="flex flex-col">
+                    {/* <span className="font-bold text-lg">Tickets</span> */}
+                    <span className="text-sm font-medium -mt-1 text-zinc-500">dashboard - products - tickets</span>
+                </div>
                 {/* <span className="text-sm text-neutral-400">Offline há {result}</span> */}
                 {   currentRoute === '/pricing' ? 
                     <>
@@ -63,7 +67,7 @@ export function Header ({
                         </button> */}
                     </>
                     :
-                    <div className="flex gap-1 items-center">
+                    <div className="flex gap-3 items-center">
                        
                         <button 
                             // href={'/pricing'} 
@@ -72,14 +76,15 @@ export function Header ({
                         >
                             Upgrade
                         </button>
-                        <div className="w-[300px] h-10 rounded-sm px-3 bg-neutral-100">
-                            <input className="w-full h-full bg-transparent outline-none" placeholder="Pesquisar" type="search"/>
+                        <div className="w-[300px] h-10 rounded-lg border px-3 bg-neutral-0 flex gap-2 items-center">
+                             <Search strokeWidth={1} color="#5f5f5fff" size={20}/>
+                            <input className="w-full h-full bg-transparent outline-none text-sm" placeholder="Pesquisar..." type="search"/>
                         </div>
                         <button 
                             onClick={() => {}}
-                            className="w-10 h-10  hover:bg-zinc-50 rounded-full flex items-center justify-center relative"
+                            className="w-10 h-10 hover:bg-zinc-50 rounded-lg flex items-center justify-center relative border"
                         >
-                            <Search strokeWidth={1} size={22}/>
+                            <Pyramid strokeWidth={1} color="#5f5f5fff" size={20}/>
                         </button>
                        <Modal
                             isOpen={isModalOpen}
@@ -90,7 +95,7 @@ export function Header ({
                             </div>
                        </Modal>
                         <button 
-                            className="w-10 h-10  hover:bg-zinc-50 rounded-full flex items-center justify-center relative"
+                            className="w-10 h-10  hover:bg-zinc-50 rounded-lg flex items-center justify-center relative border rounded-md"
                             onClick={() => setShowModal(showModal ? false : true)}
                         >   
                             {
@@ -100,9 +105,9 @@ export function Header ({
                                     ></div>, document.body
                                 )
                             }
-                            <Bell strokeWidth={1} size={22}/>
+                            <Bell strokeWidth={1} color="#5f5f5fff" size={22}/>
                         </button>
-                        <button className="w-10 h-10  hover:bg-zinc-50 rounded-full flex items-center justify-center">
+                        <button className="w-10 h-10  hover:bg-zinc-50 rounded-lg border flex items-center justify-center">
                             <div className="absolute mt-[-22px] mr-[-18px] h-5 w-5 flex items-center justify-center rounded-full bg-red-500 text-xs text-white">
                                 3
                             </div>

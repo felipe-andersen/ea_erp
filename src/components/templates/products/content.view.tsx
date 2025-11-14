@@ -145,6 +145,12 @@ export async function Modal() {
     )
 }
 
+type ProductsType = {
+    id: number,
+    name: string,
+    
+}
+
 export function Content() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter()
@@ -163,7 +169,7 @@ export function Content() {
                         Produtos
                     </h2>
                     <p className='text-neutral-600 text-sm'>
-                        1 categoria 3 items cadastrados
+                        3 categorias 
                     </p>
                 </div>
                 <button 
@@ -184,7 +190,7 @@ export function Content() {
                 
                 </button>
                 <button 
-                    onClick={() => router.push("/dashboard/products/ticket")}
+                    onClick={() => router.push("/dashboard/products/baggage-volume")}
                     className="w-[120px] h-[120px] p-3 rounded text-sm flex  justify-between 
                     bg-blue-900 border-transparent text-white font-semibold  flex-col text-start items-start gap-3 min-w-30"
                 >

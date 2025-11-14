@@ -117,6 +117,8 @@ export default function Content() {
         setPriceList(data)  
     }, []);
 
+    console.log(`formadata`, formData)
+
     const handlePriceListValidityChange = useCallback((isValid: boolean) => {
         if (!isValid) {
             setPriceListIsValid(false)
@@ -276,6 +278,11 @@ export default function Content() {
                                 placeholder={"Bilhetes disponíveis"}
                                 type="number"
                                 min={0}
+                                onKeyDown={(e) => {
+                                    if (["e", "E", "+", "-"].includes(e.key)) {
+                                    e.preventDefault();
+                                    }
+                                }}
                                 {...register("availableTickets", { pattern: /^[A-Za-z]+$/i })}
                                 // aria-invalid={errors.name ? "true" : "false"}
                                 // value={capitalizeWords(watch('name'))}
@@ -316,6 +323,11 @@ export default function Content() {
                                 spellCheck="false"
                                 placeholder={"Mínimo por usuário"}
                                 min={0}
+                                onKeyDown={(e) => {
+                                    if (["e", "E", "+", "-"].includes(e.key)) {
+                                    e.preventDefault();
+                                    }
+                                }}
                                 type="number"
                                 {...register("minPerUser",  { pattern: /^[A-Za-z]+$/i})}
                                 aria-invalid={errors.minPerUser ? "true" : "false"}
@@ -343,6 +355,11 @@ export default function Content() {
                                 placeholder={"Máximo por usuário"}
                                 type="number"
                                 min={0}
+                                onKeyDown={(e) => {
+                                    if (["e", "E", "+", "-"].includes(e.key)) {
+                                    e.preventDefault();
+                                    }
+                                }}
                                 {...register("maxPerUser", { pattern: /^[A-Za-z]+$/i })}
                                 aria-invalid={errors.maxPerUser ? "true" : "false"}
                                

@@ -73,8 +73,6 @@ type CreateDateAndTimeType = {
 
 export default function CreateDateAndTime({onChange, onDateAndTimeListValidityChange}: CreateDateAndTimeType) {
 
-    const [ dateAndTimeValues ] = useState<DateAndTimesType[]>([]);
-
     const {
         trigger,
         reset,
@@ -127,7 +125,7 @@ export default function CreateDateAndTime({onChange, onDateAndTimeListValidityCh
     // }, [dateAndTimeList]);
 
     console.log(dateAndTimeList)
-    console.log(getValues())
+    // console.log(getValues())
 
    const dateAndTimesList = watch("dateAndTimes");
 

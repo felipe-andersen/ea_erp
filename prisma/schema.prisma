@@ -16,40 +16,45 @@ enum UserStatus {
 }
 
 // contry
-model Customer {
-  id        String   @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  publicId  String?  @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id")
-  name      String
-  email     String?  @unique
-  cpf       String?  @unique
-  cnpj      String?  @unique
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @db.Timestamptz(6)
-}
+// model Customer {
+//   id        String   @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   publicId  String?  @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id")
+//   name      String
+//   email     String?  @unique
+//   cpf       String?  @unique
+//   cnpj      String?  @unique
+//   createdAt DateTime @default(now()) @db.Timestamptz(6)
+//   updatedAt DateTime @updatedAt @db.Timestamptz(6)
+// }
 
 enum UserType {
   admin
   client
-  employee
+  staff
+}
+
+enum Role {
+  owner
   manager
+  employee
 }
 
 // idiom | contry
-model Service {
-  id           String   @id @default(uuid())
-  name         String
-  description  String?
-  defaultPrice Float
-  type         String?
-  category     Category @relation(fields: [categoryName], references: [categoryName])
-  categoryName String
-}
+// model Service {
+//   id           String   @id @default(uuid())
+//   name         String
+//   description  String?
+//   defaultPrice Float
+//   type         String?
+//   category     Category @relation(fields: [categoryName], references: [categoryName])
+//   categoryName String
+// }
 
-model Category {
-  id           String    @id @default(uuid())
-  categoryName String    @unique
-  Service      Service[]
-}
+// model Category {
+//   id           String    @id @default(uuid())
+//   categoryName String    @unique
+//   Service      Service[]
+// }
 
 model User {
   user_id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid

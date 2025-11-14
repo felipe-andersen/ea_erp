@@ -8,8 +8,7 @@ import { useState, useRef } from 'react';
 import { Header } from '@/components/organisms/header';
 import { FaSquareBehance } from 'react-icons/fa6';
 import { CgAdd } from 'react-icons/cg';
-import { ServiceCategories } from '@/interfaces/ServiceCategory';
-import { capitalizeWords } from '@/utils/capitalizeWords';
+
 
 
 interface Category {
@@ -108,7 +107,7 @@ export function Main() {
                                 type="text" 
                                 // {...register("fullName") }
                                 // aria-invalid={errors.fullName ? "true" : "false"} 
-                                defaultValue={capitalizeWords('Lavagem de estofados')}
+                                // defaultValue={capitalizeWords('Lavagem de estofados')}
                                 // onChange={(data) => data}
                                 // onChange={(e) => e.isPropagationStopped() && }
                             />

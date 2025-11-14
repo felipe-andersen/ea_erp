@@ -189,6 +189,7 @@ export function Content() {
     // my mutations
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
+
    
     return (
     <main className='bg-neutral-100 h-full overflow-y-scroll w-full'>
@@ -197,10 +198,10 @@ export function Content() {
             isOpen={isModalOpen}
         />
         <div className='w-full h-auto w-full sm:p-8 flex flex-col bg-white'>
-            <div className='flex justify-between mb-6'>
-                <div className='flex flex-col gap-1'>
+            <div className='flex justify-between '>
+                <div className='flex flex-col mb-10 gap-3'>
                     <h2 className='text-md font-bold text-xl'>
-                        Tickets
+                        Volume de bagagem
                     </h2>
                     <p className='text-neutral-600 text-sm'>
                         1 categoria 3 items cadastrados
@@ -209,14 +210,14 @@ export function Content() {
                 <span className="flex gap-3 items-center h-10">
                     <button 
                         onClick={() => setIsModalOpen(true)}
-                        className=' h-10 w-min px-5 whitespace-nowrap text-sm font-medium  rounded-xl bg-gray-100 flex items-center gap-2'
+                        className=' h-10 w-min px-3 whitespace-nowrap text-sm font-medium  rounded-xl bg-gray-100 flex items-center gap-2'
                     >
-                        <span>Experiencia</span>
+                        <span>Volume de bagagem padrão</span>
                         <span><ChevronDownIcon size={18}/></span>
                     </button>
                     <button 
                         onClick={() => setIsModalOpen(true)}
-                        className=' h-10 w-min px-5 whitespace-nowrap text-sm font-medium  rounded-xl text-white 0 bg-blue-900 hover:bg-[#363636]'
+                        className=' h-10 w-min px-3 whitespace-nowrap text-sm font-medium  rounded-xl  text-white 0 bg-neutral-900 hover:bg-[#363636]'
                     >
                         Nova categoria
                     </button>
@@ -265,15 +266,15 @@ export function Content() {
                     Lavagem
                 </h2>
             </div> */}
-            <div className='bg-[rgba(243, 243, 243, 1)] py-8 rounded-xl border-[1px] border-b-[4px] border-l-[1px] mb-6 border'>
+            <div className='bg-white py-8 rounded-xl border-[1px] border-b-[4px] border-l-[1px] mb-6 border'>
                 <div className='flex justify-between px-4 sm:px-8 items-center mb-6'>
                     <h2 className='font-semibold text-lg '>
-                        Experiências
+                        Volume de bagagem padrão
                     </h2>
                     <div className='flex gap-3'>
                         <button
                             onClick={() => router.push('/dashboard/products/ticket/new')} 
-                            className='h-10 w-min px-3 whitespace-nowrap text-blue-900 text-sm rounded-xl bg-blue-100 font-medium '>
+                            className='h-10 w-min px-3 whitespace-nowrap  text- text-sm rounded-xl bg-blue-100 font-medium '>
                             Cadastrar 
                         </button>
                         <div className='flex -mr-2'>
@@ -308,7 +309,7 @@ export function Content() {
                 </div>
                 <div className="flex jsutify-between w-full">
                     <div className='px-7 w-full overflow-x-scroll'>
-                        <table className='w-full bg-transparent'>
+                        <table className='bg-white w-full '>
                             <thead className=''>
                                 <tr className='h-10'>
                                     <th className='text-start text-sm  w-16 font-normal text-zinc-700  max-w-34 w-[40px] min-w-[40px]'>
@@ -404,12 +405,12 @@ export function Content() {
                 </div>
             </div>
             
-            {/* <div className='h-40 w-full bg-white rounded mb-6 gap-6 flex flex-col items-center justify-center border-b-[4px] border-l-[1px] border'>
+            <div className='h-40 w-full bg-white rounded mb-6 gap-6 flex flex-col items-center justify-center border-b-[4px] border-l-[1px] border'>
                 Sem produtos cadastrados
                 <button className='h-10 border border-black w-min px-6 whitespace-nowrap  text-sm font-semibold rounded '>
                     Adicionar serviço
                 </button>
-            </div> */}
+            </div>
         </div>
     </main>
     );

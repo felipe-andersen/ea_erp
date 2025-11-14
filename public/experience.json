@@ -1,0 +1,162 @@
+[
+  {
+    "slug": "rio-beach-experience",
+    "companyId": "comp_001",
+    "title": "Rio Beach Experience",
+    "description": "Passeio pelas praias icônicas do Rio de Janeiro com atividades de surf e fotografia.",
+    "experienceId": "exp_001",
+    "notes": "Levar protetor solar e garrafa d’água.",
+    "daysAndTimes": [
+      { "day": "Saturday", "time": "08:00-16:00" },
+      { "day": "Sunday", "time": "09:00-15:00" }
+    ],
+    "prices": [
+      { "id": "p1", "ageRange": "Child (1-11 years)", "minPrice": 50, "maxPrice": 80, "defaultPrice": 60 },
+      { "id": "p2", "ageRange": "General (1-65+ years)", "minPrice": 100, "maxPrice": 150, "defaultPrice": 120 }
+    ],
+    "availableTickets": 100,
+    "soldTickets": 35,
+    "remainingTickets": 65,
+    "minPerUser": 1,
+    "maxPerUser": 6,
+    "disabled": false,
+    "imgList": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+    ],
+    "locations": [
+      { "city": "Rio de Janeiro", "country": "Brazil", "coordinates": { "lat": -22.9068, "lng": -43.1729 } }
+    ],
+    "achievements": ["Top Rated 2024", "Family Friendly"],
+    "createdAt": "2025-10-01T09:00:00Z",
+    "updatedAt": "2025-10-25T14:00:00Z",
+    "postedAt": "2025-10-26T12:00:00Z"
+  },
+  {
+    "slug": "patagonia-hike",
+    "companyId": "comp_002",
+    "title": "Trilha na Patagônia",
+    "description": "Aventura nas montanhas e glaciares da Patagônia com guia local.",
+    "experienceId": "exp_002",
+    "notes": "Necessário equipamento de frio e botas de trilha.",
+    "daysAndTimes": [
+      { "day": "Monday", "time": "07:00-18:00" },
+      { "day": "Wednesday", "time": "07:00-18:00" }
+    ],
+    "prices": [
+      { "id": "p3", "ageRange": "General (1-65+ years)", "minPrice": 350, "maxPrice": 500, "defaultPrice": 400 }
+    ],
+    "availableTickets": 20,
+    "soldTickets": 8,
+    "remainingTickets": 12,
+    "minPerUser": 1,
+    "maxPerUser": 4,
+    "disabled": false,
+    "imgList": [
+      "https://images.unsplash.com/photo-1558980664-10ea68a947c7",
+      "https://images.unsplash.com/photo-1549887534-3db1bd59dcca"
+    ],
+    "locations": [
+      { "city": "El Chaltén", "country": "Argentina", "coordinates": { "lat": -49.3315, "lng": -72.8863 } }
+    ],
+    "achievements": ["Eco Friendly", "Adventure of the Year"],
+    "createdAt": "2025-09-15T11:30:00Z",
+    "updatedAt": "2025-10-20T10:00:00Z",
+    "postedAt": "2025-10-22T08:00:00Z"
+  },
+  {
+    "slug": "tokyo-tech-tour",
+    "companyId": "comp_003",
+    "title": "Tour Tecnológico em Tóquio",
+    "description": "Descubra a inovação japonesa em um tour por Akihabara e Shibuya.",
+    "experienceId": "exp_003",
+    "notes": "Inclui transporte e guia bilíngue.",
+    "daysAndTimes": [
+      { "day": "Tuesday", "time": "10:00-17:00" },
+      { "day": "Friday", "time": "10:00-17:00" }
+    ],
+    "prices": [
+      { "id": "p4", "ageRange": "General (1-65+ years)", "minPrice": 120, "maxPrice": 180, "defaultPrice": 150 }
+    ],
+    "availableTickets": 50,
+    "soldTickets": 25,
+    "remainingTickets": 25,
+    "minPerUser": 1,
+    "maxPerUser": 5,
+    "disabled": false,
+    "imgList": [
+      "https://images.unsplash.com/photo-1549692520-acc6669e2f0c",
+      "https://images.unsplash.com/photo-1531297484001-80022131f5a1"
+    ],
+    "locations": [
+      { "city": "Tokyo", "country": "Japan", "coordinates": { "lat": 35.6762, "lng": 139.6503 } }
+    ],
+    "achievements": ["Most Booked 2025", "Cultural Highlight"],
+    "createdAt": "2025-08-10T09:00:00Z",
+    "updatedAt": "2025-10-01T15:00:00Z",
+    "postedAt": "2025-10-02T08:00:00Z"
+  },
+  {
+    "slug": "bali-relax",
+    "companyId": "comp_004",
+    "title": "Retiro Espiritual em Bali",
+    "description": "Descanse com yoga, meditação e praias paradisíacas.",
+    "experienceId": "exp_004",
+    "notes": "Pacote inclui hospedagem e alimentação vegetariana.",
+    "daysAndTimes": [
+      { "day": "Monday", "time": "09:00-17:00" },
+      { "day": "Thursday", "time": "09:00-17:00" }
+    ],
+    "prices": [
+      { "id": "p5", "ageRange": "General (1-65+ years)", "minPrice": 200, "maxPrice": 300, "defaultPrice": 250 }
+    ],
+    "availableTickets": 40,
+    "soldTickets": 30,
+    "remainingTickets": 10,
+    "minPerUser": 1,
+    "maxPerUser": 3,
+    "disabled": false,
+    "imgList": [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      "https://images.unsplash.com/photo-1558980664-10ea68a947c7"
+    ],
+    "locations": [
+      { "city": "Ubud", "country": "Indonesia", "coordinates": { "lat": -8.5069, "lng": 115.2625 } }
+    ],
+    "achievements": ["Wellness Certified", "Top Choice 2025"],
+    "createdAt": "2025-09-05T10:00:00Z",
+    "updatedAt": "2025-10-15T09:30:00Z",
+    "postedAt": "2025-10-20T10:00:00Z"
+  },
+  {
+    "slug": "newyork-urban-life",
+    "companyId": "comp_005",
+    "title": "Vida Urbana em Nova York",
+    "description": "Explore Manhattan, Brooklyn e os pontos culturais mais icônicos da cidade.",
+    "experienceId": "exp_005",
+    "notes": "Inclui ingressos para museus e transporte público.",
+    "daysAndTimes": [
+      { "day": "Saturday", "time": "09:00-18:00" }
+    ],
+    "prices": [
+      { "id": "p6", "ageRange": "General (1-65+ years)", "minPrice": 180, "maxPrice": 220, "defaultPrice": 200 }
+    ],
+    "availableTickets": 80,
+    "soldTickets": 55,
+    "remainingTickets": 25,
+    "minPerUser": 1,
+    "maxPerUser": 5,
+    "disabled": false,
+    "imgList": [
+      "https://images.unsplash.com/photo-1534447677768-be436bb09401",
+      "https://images.unsplash.com/photo-1533106418989-88406c7cc8bb"
+    ],
+    "locations": [
+      { "city": "New York", "country": "USA", "coordinates": { "lat": 40.7128, "lng": -74.006 } }
+    ],
+    "achievements": ["Best Urban Tour", "Cultural Excellence 2025"],
+    "createdAt": "2025-10-10T11:00:00Z",
+    "updatedAt": "2025-10-30T12:00:00Z",
+    "postedAt": "2025-10-31T08:00:00Z"
+  }
+]
