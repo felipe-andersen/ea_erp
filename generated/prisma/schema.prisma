@@ -5,8 +5,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "sqlite"
-  url       = "file:./sqlite.db"
+  provider = "sqlite"
+  url      = "file:./sqlite.db"
   // directUrl = env("DIRECT_URL")
 }
 
@@ -17,15 +17,15 @@ model User {
   lastName            String?
   firstName           String
   taxId               String?               @unique
-  updatedAt           DateTime?              @default(now()) @updatedAt
-  createdAt           DateTime?              @default(now())
+  updatedAt           DateTime?             @default(now()) @updatedAt
+  createdAt           DateTime?             @default(now())
   authEmail           String                @unique
-  userStatus          UserStatus?            @default(ACTIVE)
-  statusNotes         String?                @default("")
+  userStatus          UserStatus?           @default(ACTIVE)
+  statusNotes         String?               @default("")
   authPhone           String?
   emailConfirmedAt    DateTime?
   phoneConfirmedAt    DateTime?
-  authUserId          String?                @unique
+  authUserId          String?               @unique
   cart                Cart[]
   favorite            Favorite[]
   orderCharge         OrderCharge[]
@@ -36,30 +36,32 @@ model User {
   userEmail           UserEmail[]
   userPhone           UserPhone[]
   userType            UserType?
-  accountSettings AccountSettings?
+  accountSettings     AccountSettings?
   docs                String?
+
   @@index([publicId])
 }
-model Employee {
-  id String @id @default(cuid())
-  role              Role?
-  permissions       String
-  staffSince        DateTime?
 
-    userType  UserType? 
+model Employee {
+  id          String    @id @default(cuid())
+  role        Role?
+  permissions String
+  staffSince  DateTime?
+
+  userType UserType?
 }
 
 model Customer {
-  id         String   @id @default(cuid())
+  id String @id @default(cuid())
 
   // email      String?  
   // phone      String?
   // lastName            String?
   // firstName           String
-   permissions       String?
-     customerSince     DateTime?
-    
-  userType  UserType? 
+  permissions   String?
+  customerSince DateTime?
+
+  userType UserType?
 }
 
 enum UserStatus {
@@ -70,18 +72,18 @@ enum UserStatus {
 }
 
 model UserType {
-  id  String @id  @default(uuid())
-  userId            String               @unique
+  id     String @id @default(uuid())
+  userId String @unique
 
-  employeeId String?  @unique
- employee Employee?  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  customerId  String?  @unique 
-  customer  Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  employeeId String?   @unique
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  customerId String?   @unique
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@index([userId])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([userId, customerId, employeeId])
+  @@index([userId])
 }
 
 enum Role {
@@ -91,45 +93,45 @@ enum Role {
 }
 
 model Cart {
-  id              String        @id @default(cuid())
-  updatedAt       DateTime      @default(now()) @updatedAt
-  userId          String        
-  Coupons         String?       
-  User            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  CartItem       CartItem[]
-  OrderCharge     OrderCharge[]
-  Coupon          Coupon[]
-  totalDiscount   Decimal?
+  id            String        @id @default(cuid())
+  updatedAt     DateTime      @default(now()) @updatedAt
+  userId        String
+  Coupons       String?
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  CartItem      CartItem[]
+  OrderCharge   OrderCharge[]
+  Coupon        Coupon[]
+  totalDiscount Decimal?
 
   @@index([userId])
 }
 
-model CartItem { // CartItem
-  id                String   @id @default(cuid())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @default(now()) @updatedAt
-  cardId            String   
-  coupons           Coupon[]
-  totalDiscount     Decimal
+model CartItem {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  cardId        String
+  coupons       Coupon[]
+  totalDiscount Decimal
   //couponId  String? 
-  Cart              Cart     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  Cart          Cart     @relation(fields: [cardId], references: [id], onDelete: Cascade)
   //Coupon    Coupon?  @relation(fields: [couponId], references: [id])
 
   @@index([cardId])
 }
 
-model Company { // public api
+model Company {
   id             String           @id @default(cuid())
   nickName       String           @unique
-  name           String          
-  documentCode   String?        
-  documentType   String?       
+  name           String
+  documentCode   String?
+  documentType   String?
   // email          String
-  website        String            
+  website        String
   logoUrl        String?
   createdAt      DateTime?
   companyEmail   CompanyEmail[]
-  updatedAt      DateTime        @default(now()) @updatedAt
+  updatedAt      DateTime         @default(now()) @updatedAt
   CompanyAddress CompanyAddress[]
   CompanyPhone   CompanyPhone[]
   Experience     Experience[]
@@ -150,21 +152,21 @@ model CompanyAddress {
   postalCode        String?
   latitudeLongitude String?
   updatedAt         DateTime
-  companyId         String  
+  companyId         String
   Company           Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@index([companyId])
 }
 
 model CompanyPhone {
-  id         String               @id @default(cuid())
+  id         String           @id @default(cuid())
   contryCode String
   areaCode   String
-  number     String               @unique
-  type       CompanyEmailType     @default(GENERAL) @unique
-  updatedAt  DateTime             @default(now()) @updatedAt 
-  companyId  String  
-  Company    Company              @relation(fields: [companyId], references: [id])
+  number     String           @unique
+  type       CompanyEmailType @unique @default(GENERAL)
+  updatedAt  DateTime         @default(now()) @updatedAt
+  companyId  String
+  Company    Company          @relation(fields: [companyId], references: [id])
 
   @@index([companyId])
 }
@@ -177,17 +179,17 @@ enum companyPhoneType {
 }
 
 model CompanyEmail {
-  id                String            @id @default(cuid())
-  email             String            @unique 
-  type              CompanyEmailType  @default(GENERAL)  
-  updatedAt         DateTime          @default(now()) @updatedAt
-  createdAt         DateTime          @default(now())
-  companyId         String   
-  Company           Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  @@index([companyId])
+  id        String           @id @default(cuid())
+  email     String           @unique
+  type      CompanyEmailType @default(GENERAL)
+  updatedAt DateTime         @default(now()) @updatedAt
+  createdAt DateTime         @default(now())
+  companyId String
+  Company   Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   // @@unique([email])
   // @@unique([type])
+
+  @@index([companyId])
 }
 
 enum CompanyEmailType {
@@ -199,7 +201,7 @@ enum CompanyEmailType {
 }
 
 model Coupon {
-  id                 String       @id @default(cuid())
+  id                 String            @id @default(cuid())
   code               String
   description        String?
   discountYype       DiscountType
@@ -211,39 +213,39 @@ model Coupon {
   startsAt           DateTime
   expiresAt          DateTime
   isActive           Boolean
-  createdAt          DateTime     @default(now())
+  createdAt          DateTime          @default(now())
   Cart               Cart[]
   CartItem           CartItem[]
   tags               String?
-  purchasedTicket PurchasedTicket[]
+  purchasedTicket    PurchasedTicket[]
 }
 
 model Experience {
-  id                 String   @id @default(cuid())
-  slug               String   @unique
-  title              String
-  description        String
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  publicatedAt       DateTime?
-  companyId          String
-  information        String   @default("")
-  includes           String   @default("{}")
-  notIncludes        String   @default("{}")
-  itinerary          String?  @default("{}")
-  rules              String   @default("{}")
-  notes              String?
-  daysAndTimes       String?  @default("{}")
-  prices             String   @default("{}")
-  availableTickets   Int      @default(0)
+  id                  String                @id @default(cuid())
+  slug                String                @unique
+  title               String
+  description         String
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  publicatedAt        DateTime?
+  companyId           String
+  information         String                @default("")
+  includes            String                @default("{}")
+  notIncludes         String                @default("{}")
+  itinerary           String?               @default("{}")
+  rules               String                @default("{}")
+  notes               String?
+  daysAndTimes        String?               @default("{}")
+  prices              String                @default("{}")
+  availableTickets    Int                   @default(0)
   // remainingTickets   Int      @default(0)
   // soldTickets        Int      @default(0)
-  maxPerUser         Int      @default(1)
-  minPerUser         Int      @default(1)
-  disabled           Boolean  @default(false)
-  imgList            String?  @default("[]")
-  locations          String?  @default("[]")
-  achievements       String?  @default("[]")
+  maxPerUser          Int                   @default(1)
+  minPerUser          Int                   @default(1)
+  disabled            Boolean               @default(false)
+  imgList             String?               @default("[]")
+  locations           String?               @default("[]")
+  achievements        String?               @default("[]")
   purchasedExperience PurchasedExperience[]
   purchasedTicket     PurchasedTicket[]
   TicketForSale       TicketForSale[]
@@ -251,6 +253,7 @@ model Experience {
   Company             Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
   experienceAddress   ExperienceAddress[]
   experience_img      Experience_img[] //imgList
+
   @@index([slug])
   @@index([companyId])
 }
@@ -265,20 +268,20 @@ model Experience {
 // }
 
 model ExperienceAddress {
-  id                String     @id @default(cuid())
-  street            String
-  number            String
-  complement        String?
-  region            String?
-  city              String
-  state             String
-  country           String
-  postalCode        String?
-  longitude         String?
-  latitude          String?
-  updatedAt         DateTime
-  experienceId      String     
-  Experience        Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
+  street       String
+  number       String
+  complement   String?
+  region       String?
+  city         String
+  state        String
+  country      String
+  postalCode   String?
+  longitude    String?
+  latitude     String?
+  updatedAt    DateTime
+  experienceId String
+  Experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 
   @@index([experienceId])
 }
@@ -291,7 +294,7 @@ model Experience_img {
   position     String
   updatedAt    DateTime   @default(now()) @updatedAt
   createdAt    DateTime   @default(now())
-  experienceId String     
+  experienceId String
   Experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 
   @@index([experienceId])
@@ -300,8 +303,8 @@ model Experience_img {
 model Favorite {
   id           String     @id @default(cuid())
   added_at     DateTime
-  experienceId String     
-  userId       String     
+  experienceId String
+  userId       String
   Experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
   User         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -310,21 +313,21 @@ model Favorite {
 }
 
 model OrderCharge {
-  id        String    @id @default(cuid())
-  publicId String
-  orderId String
-  code          String      @unique
-  price Int
-  totalAmount Int
-  status OrderChargeStatus
+  id            String            @id @default(cuid())
+  publicId      String
+  orderId       String
+  code          String            @unique
+  price         Int
+  totalAmount   Int
+  status        OrderChargeStatus
   paymentMethod String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
-  userId    String?  
-  cartId    String?   
-  Cart      Cart?     @relation(fields: [cartId], references: [id])
-  User      User?     @relation(fields: [userId], references: [id])
-  Payment   Payment[]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @default(now()) @updatedAt
+  userId        String?
+  cartId        String?
+  Cart          Cart?             @relation(fields: [cartId], references: [id])
+  User          User?             @relation(fields: [userId], references: [id])
+  Payment       Payment[]
 
   @@unique([createdAt, userId, cartId])
   @@index([cartId])
@@ -339,17 +342,18 @@ enum OrderChargeStatus {
   REFUNDED
 }
 
-model Payment { //transaction
+model Payment {
   id            String      @id @default(cuid())
   publicId      String      @unique @default(cuid())
   code          String      @unique
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @default(now()) @updatedAt
-  orderChargeId String      
+  orderChargeId String
   OrderCharge   OrderCharge @relation(fields: [orderChargeId], references: [id])
-  refound  Refound[]
-  inflows Inflow[]
-  outflow Outflow[]
+  refound       Refound[]
+  inflows       Inflow[]
+  outflow       Outflow[]
+
   @@index([orderChargeId])
   @@index([publicId])
   @@index([code])
@@ -368,17 +372,16 @@ model Person {
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @default(now()) @updatedAt
   documentUrl            String?
-  personPhoneId          String?          
+  personPhoneId          String?
   PersonPhone            PersonPhone?
   purchasedTicket        PurchasedTicket[]
+
   // paymentId              String 
   // payment   Payment @relation(fields: [paymentId], references: [id])
   @@unique([documentType, documentCode])
-
   @@index([personPhoneId])
   @@index([documentType])
   @@index([documentCode])
-            
 }
 
 model PersonPhone {
@@ -389,25 +392,24 @@ model PersonPhone {
   type      String?
   updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
-  personId  String   @unique 
+  personId  String   @unique
   Person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
 
   @@index([personId])
 }
 
 model PurchasedExperience {
-  id              String            @id @default(cuid())
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @default(now()) @updatedAt
-         
-  experienceId    String?          
-  userId          String?          
-  Experience      Experience?       @relation(fields: [experienceId], references: [id])
-   
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  experienceId String?
+  userId       String?
+  Experience   Experience? @relation(fields: [experienceId], references: [id])
+
   User            User?             @relation(fields: [userId], references: [id])
   PurchasedTicket PurchasedTicket[]
   Review          Review[]
-
 
   @@index([experienceId])
   @@index([userId])
@@ -421,15 +423,16 @@ model PurchasedTicket {
   createdAt                 DateTime            @default(now())
   updatedAt                 DateTime            @default(now()) @updatedAt
   type                      String
-  userId                    String?            
-  personId                  String?          
-  purchasedExperienceId     String             
-  experienceId              String?             
+  userId                    String?
+  personId                  String?
+  purchasedExperienceId     String
+  experienceId              String?
   Experience                Experience?         @relation(fields: [experienceId], references: [id])
   Person                    Person?             @relation(fields: [personId], references: [id])
   PurchasedExperience       PurchasedExperience @relation(fields: [purchasedExperienceId], references: [id])
   User                      User?               @relation(fields: [userId], references: [id])
   coupons                   Coupon[]
+
   @@index([publicId])
   @@index([code])
   @@index([userId])
@@ -442,20 +445,20 @@ model Refound {
   type      String?
   createdAt DateTime @default(now())
   // saleId    String  
-  paymentId String  
-  payment Payment @relation(fields: [paymentId], references: [id])
+  paymentId String
+  payment   Payment  @relation(fields: [paymentId], references: [id])
   // payment payment[]
 
   @@index([paymentId])
 }
 
 model MarketingCampaign {
-  id        String   @id @default(cuid())
+  id        String         @id @default(cuid())
   name      String
-  channels  String     
+  channels  String
   startDate DateTime
   endDate   DateTime
-  status    CampaignStatus  @default(PENDING)
+  status    CampaignStatus @default(PENDING)
   budget    Decimal?
 
   createdAt DateTime @default(now())
@@ -470,81 +473,80 @@ enum CampaignStatus {
   CANCELLED
 }
 
-
 model Inflow {
-  id        String   @id @default(cuid())
-  description    String
-  value Decimal
-  type      String?
-  status    String?
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  description String
+  value       Decimal
+  type        String?
+  status      String?
+  createdAt   DateTime @default(now())
   // saleId    String  
-  paymentId String  @unique
-  payment Payment @relation(fields: [paymentId], references: [id])
+  paymentId   String   @unique
+  payment     Payment  @relation(fields: [paymentId], references: [id])
 
   @@index([paymentId])
 }
 
 model Setting {
-  id        String   @id @default(cuid())
-  businessName      String   @unique
-  docs      String
+  id              String    @id @default(cuid())
+  businessName    String    @unique
+  docs            String
   businessAddress String?
-  businessEmail String? 
-  businessPhone String?
-  operatingHours String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  contry Country?
-  idiom Idiom?
-  currency Currency?
+  businessEmail   String?
+  businessPhone   String?
+  operatingHours  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now()) @updatedAt
+  contry          Country?
+  idiom           Idiom?
+  currency        Currency?
 }
-model AccountSettings {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  emailNotifications    Boolean @default(true)
-  smsNotifications      Boolean @default(false)
-  pushNotifications     Boolean @default(true)
-  newsletter            Boolean @default(true)
+model AccountSettings {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  emailNotifications Boolean @default(true)
+  smsNotifications   Boolean @default(false)
+  pushNotifications  Boolean @default(true)
+  newsletter         Boolean @default(true)
 
   // showEmail             Boolean @default(false)
   // showPhone             Boolean @default(false)
   // showProfile           Boolean @default(true)
-  twoFactorEnabled      Boolean @default(false)
+  twoFactorEnabled Boolean @default(false)
 
-  language              String  @default("en")
-  theme                 String  @default("light")
-  timezone              String  @default("UTC")
+  language String @default("en")
+  theme    String @default("light")
+  timezone String @default("UTC")
 
-  deactivateAccount     Boolean @default(false)
-  deleteRequested       Boolean @default(false)
+  deactivateAccount Boolean @default(false)
+  deleteRequested   Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model BusinessSettings {
-  id        String   @id @default(cuid())
-  companyName      String
-  legalName        String?
-  taxId            String?
-  industry         String?
-  email            String?
-  phone            String?
-  website          String?
-  street           String?
-  number           String?
-  city             String?
-  state            String?
-  zip              String?
-  country          String?
-  taxRegime        String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  companyName String
+  legalName   String?
+  taxId       String?
+  industry    String?
+  email       String?
+  phone       String?
+  website     String?
+  street      String?
+  number      String?
+  city        String?
+  state       String?
+  zip         String?
+  country     String?
+  taxRegime   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
-
 
 enum Country {
   BRAZIL
@@ -553,19 +555,16 @@ enum Country {
 }
 
 enum Idiom {
-  PT_BR   
-  ES_AR  
-  EN_US   
+  PT_BR
+  ES_AR
+  EN_US
 }
 
 enum Currency {
-  BRL  
-  ARS   
-  USD  
+  BRL
+  ARS
+  USD
 }
-
-
-
 
 model Schedule {
   id        String   @id @default(cuid())
@@ -579,57 +578,51 @@ model Schedule {
 }
 
 model GrowUp {
-  id        String   @id @default(cuid())
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-    requestDate String
-  amount String
-  purpose String
-  status String
+  id String @id @default(cuid())
 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  requestDate String
+  amount      String
+  purpose     String
+  status      String
 }
 
 model Sponsor {
-  id         String   @id @default(cuid())
-  name       String
+  id          String  @id @default(cuid())
+  name        String
   description String?
-  logoUrl    String?
-  website    String?
-  email      String?
-  phone      String?
+  logoUrl     String?
+  website     String?
+  email       String?
+  phone       String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
-
 model Tasks {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
   responsible String
-  data String
-  state      String
-  
-
+  data        String
+  state       String
 }
 
 model Outflow {
-     id        String   @id @default(cuid())
-  description    String
-  value Decimal
-  type      String?
-  status    String?
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  description String
+  value       Decimal
+  type        String?
+  status      String?
+  createdAt   DateTime @default(now())
 
   paymentId String  @unique
-  payment Payment @relation(fields: [paymentId], references: [id])
-
-  @@index([paymentId])
+  payment   Payment @relation(fields: [paymentId], references: [id])
   // saleId    String  
 
+  @@index([paymentId])
 }
 
 model Review {
@@ -638,8 +631,8 @@ model Review {
   comment               String?
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @default(now()) @updatedAt
-  userId                String?            
-  purchasedExperienceId String             
+  userId                String?
+  purchasedExperienceId String
   PurchasedExperience   PurchasedExperience @relation(fields: [purchasedExperienceId], references: [id], onDelete: Cascade)
   User                  User?               @relation(fields: [userId], references: [id])
 
@@ -666,24 +659,24 @@ model SuportTicket {
   message   String
   createdAt DateTime            @default(now())
   updatedAt DateTime            @default(now()) @updatedAt
-  userId    String              
+  userId    String
   User      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
-model UserEmail { //  public api
+model UserEmail {
   id               String   @id @unique @default(cuid())
-  alternativeEmail String   @unique 
+  alternativeEmail String   @unique
   updatedAt        DateTime @default(now()) @updatedAt
   createdAt        DateTime @default(now())
-  userId           String   
+  userId           String
   User             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
-model UserPhone {  //  public api
+model UserPhone {
   id        String   @id @default(cuid())
   contry    String
   area      String
@@ -691,58 +684,55 @@ model UserPhone {  //  public api
   type      String?
   updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
-  userId    String   
+  userId    String
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, contry, area, number])
   @@index([userId])
 }
 
-model TicketForSale {  //  public api
+model TicketForSale {
   id                        String     @id @default(cuid())
-  isForPersonWithDisability Boolean     @default(true)
-  type String?  @default("[]") // TicketForAgeRange  
+  isForPersonWithDisability Boolean    @default(true)
+  type                      String?    @default("[]") // TicketForAgeRange  
   createdAt                 DateTime   @default(now())
   updatedAt                 DateTime   @default(now())
-  experienceId              String     
+  experienceId              String
   Experience                Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 
   @@index([experienceId])
 }
 
 model Supplier {
-  id             String   @id @default(cuid())
-  companyName    String
-  email          String?  
-  phone          String?
-  taxId          String?   @unique// CNPJ / documento do fornecedor
-  address        String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-
- 
+  id          String   @id @default(cuid())
+  companyName String
+  email       String?
+  phone       String?
+  taxId       String?  @unique // CNPJ / documento do fornecedor
+  address     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Category {
-  id        String   @id @default(cuid())
-  name      String   @unique
+  id          String   @id @default(cuid())
+  name        String   @unique
   description String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  tags String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  tags        String?
 }
 
 model ActionTask {
-  id          String     @id @default(cuid())
- 
+  id String @id @default(cuid())
 
   title       String
   description String?
   dueDate     DateTime?
   status      TaskStatus @default(PENDING)
 
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum TaskStatus {
@@ -808,7 +798,6 @@ enum SuportTicketSubject {
   OTHER
 }
 
-
 // model Volume {
 //   id        String   @id @default(cuid())
 //   name      String   @unique
@@ -819,27 +808,25 @@ enum SuportTicketSubject {
 // }
 
 model VolumeCategory {
-  id        String   @id @default(cuid())
-  name      String   @unique //A33 (22kg)
+  id          String      @id @default(cuid())
+  name        String      @unique //A33 (22kg)
   description String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Inventory Inventory[]
- 
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  Inventory   Inventory[]
 }
 
 model Inventory {
-  id        String   @id @default(cuid())
-  volumeCategoryId  String 
+  id               String         @id @default(cuid())
+  volumeCategoryId String
   // quantity  Int
   // location  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
   // purchasedTicketId String?
   // purchasedTicket   PurchasedTicket? @relation(fields: [purchasedTicketId], references: [id])
-  volumeCategory VolumeCategory @relation(fields: [volumeCategoryId], references: [id], onDelete: Cascade)
+  volumeCategory   VolumeCategory @relation(fields: [volumeCategoryId], references: [id], onDelete: Cascade)
 }
-
 
 model GatewayCharge {
   id          String   @id @default(cuid())
@@ -849,5 +836,3 @@ model GatewayCharge {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-
-
